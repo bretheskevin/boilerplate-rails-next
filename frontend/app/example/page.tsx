@@ -1,6 +1,7 @@
 "use client";
 
 import { AuthService } from "@services/auth.service";
+import { User } from "@/core/models/user";
 
 const buttonStyles =
   "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded";
@@ -22,7 +23,12 @@ export default function Example() {
 
   const me = async () => {
     const response = await AuthService.me();
-    console.log(response);
+
+    if (response.hasOwnProperty("id")) {
+      const user = new User();
+      user.fromJSON(response);
+      console.log(user);
+    }
   };
 
   const logLocalStorage = () => {
