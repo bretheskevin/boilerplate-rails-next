@@ -23,7 +23,6 @@ interface DeviseErrorResponse {
 
 export class AuthService {
   static async register(email: string, password: string): Promise<DeviseResponse> {
-    console.log("a");
     const response = await ApiService.post<DevisePossibleResponse>(
       "users/tokens/sign_up",
       { email, password },
