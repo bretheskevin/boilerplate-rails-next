@@ -3,10 +3,10 @@ import { UserJSON } from "@/core/models/user";
 
 export interface DeviseResponse {
   ok: boolean;
-  data: DeviseSuccessResponse | DeviseErrorResponse;
+  data: DeviseSuccessResponse | ApiError;
 }
 
-type DevisePossibleResponse = DeviseSuccessResponse | DeviseErrorResponse;
+type DevisePossibleResponse = DeviseSuccessResponse | ApiError;
 
 interface DeviseSuccessResponse {
   expires_in: number;
@@ -14,11 +14,6 @@ interface DeviseSuccessResponse {
   token_type: string;
   token: string;
   resource_owner: JSONObject;
-}
-
-interface DeviseErrorResponse {
-  error: string;
-  error_description: string[];
 }
 
 export class AuthService {
@@ -40,10 +35,8 @@ export class AuthService {
     return this._getAuthResponse(response);
   }
 
-  static async me(): Promise<UserJSON | DeviseErrorResponse> {
-    const response = await ApiService.get<UserJSON | DeviseErrorResponse>(
-      "users/tokens/info",
-    );
+  static async me(): Promise<UserJSON | ApiError> {
+    const response = await ApiService.get<UserJSON | ApiError>("users/tokens/info");
 
     return response;
   }

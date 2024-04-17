@@ -4,8 +4,8 @@ export interface BaseModelJSON {
   updated_at: string;
 }
 
-export abstract class BaseModel {
-  abstract apiUrl: string;
+export class BaseModel {
+  apiUrl: string = "";
 
   attributes: BaseModelJSON = {
     id: 0,
