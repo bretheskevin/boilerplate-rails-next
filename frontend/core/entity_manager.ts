@@ -1,6 +1,5 @@
 import { BaseModel, BaseModelJSON } from "@/core/models/base_model";
 import { ApiService } from "@services/api.service";
-import { ApiError } from "next/dist/server/api-utils";
 
 export class EntityManager<T extends BaseModel, U extends BaseModelJSON> {
   private _apiUrl: string = "";
@@ -12,7 +11,6 @@ export class EntityManager<T extends BaseModel, U extends BaseModelJSON> {
   }
 
   async list(): Promise<T[] | ApiError> {
-    // @ts-ignore
     const response: U[] | ApiError = await ApiService.get<U[]>(this._apiUrl);
 
     if (ApiService.isApiError(response)) {
@@ -25,7 +23,6 @@ export class EntityManager<T extends BaseModel, U extends BaseModelJSON> {
   }
 
   async find(id: number): Promise<T | ApiError> {
-    // @ts-ignore
     const response: U | ApiError = await ApiService.get<U>(`${this._apiUrl}/${id}`);
 
     if (ApiService.isApiError(response)) {
