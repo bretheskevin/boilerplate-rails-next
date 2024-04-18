@@ -1,12 +1,5 @@
 import { ApiService } from "@/core/services/api.service";
-import { UserJSON } from "@/core/models/user";
-
-export interface DeviseResponse {
-  ok: boolean;
-  data: DeviseSuccessResponse | ApiError;
-}
-
-type DevisePossibleResponse = DeviseSuccessResponse | ApiError;
+import { User, UserJSON } from "@/core/models/user";
 
 interface DeviseSuccessResponse {
   expires_in: number;
@@ -17,28 +10,44 @@ interface DeviseSuccessResponse {
 }
 
 export class AuthService {
-  static async register(email: string, password: string): Promise<DeviseResponse> {
-    const response = await ApiService.post<DevisePossibleResponse>(
+  static async register(
+    email: string,
+    password: string,
+  ): Promise<ApiResponse<DeviseSuccessResponse>> {
+    const response = await ApiService.post<DeviseSuccessResponse>(
       "users/tokens/sign_up",
       { email, password },
     );
 
-    return this._getAuthResponse(response);
+    this._storeTokens(response);
+
+    return response;
   }
 
-  static async login(email: string, password: string): Promise<DeviseResponse> {
-    const response = await ApiService.post<DevisePossibleResponse>(
+  static async login(
+    email: string,
+    password: string,
+  ): Promise<ApiResponse<DeviseSuccessResponse>> {
+    const response = await ApiService.post<DeviseSuccessResponse>(
       "users/tokens/sign_in",
       { email, password },
     );
 
-    return this._getAuthResponse(response);
+    this._storeTokens(response);
+    return response;
   }
 
-  static async me(): Promise<UserJSON | ApiError> {
-    const response = await ApiService.get<UserJSON | ApiError>("users/tokens/info");
+  static async me(): Promise<ApiResponse<User>> {
+    const response: ApiResponse<UserJSON> =
+      await ApiService.get<UserJSON>("users/tokens/info");
 
-    return response;
+    if (response.ok) {
+      const user = new User();
+      user.fromJSON(response.data as UserJSON);
+      return { ok: true, data: user };
+    }
+
+    return { ok: false, data: response.data as ApiError };
   }
 
   static logout(): void {
@@ -46,19 +55,11 @@ export class AuthService {
     localStorage.removeItem("refreshToken");
   }
 
-  private static _storeTokens(data: DeviseSuccessResponse): void {
+  private static _storeTokens(response: ApiResponse<DeviseSuccessResponse>): void {
+    if (!response.ok) return;
+
+    const data = response.data as DeviseSuccessResponse;
     localStorage.setItem("accessToken", data.token);
     localStorage.setItem("refreshToken", data.refresh_token);
-  }
-
-  private static _getAuthResponse(response: DevisePossibleResponse): DeviseResponse {
-    const ok = response.hasOwnProperty("token");
-    if (ok) {
-      this._storeTokens(response as DeviseSuccessResponse);
-    }
-    return {
-      ok,
-      data: response,
-    };
   }
 }

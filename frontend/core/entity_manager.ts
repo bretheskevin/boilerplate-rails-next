@@ -10,26 +10,34 @@ export class EntityManager<T extends BaseModel, U extends BaseModelJSON> {
     this._modelClass = modelClass;
   }
 
-  async list(): Promise<T[] | ApiError> {
-    const response: U[] | ApiError = await ApiService.get<U[]>(this._apiUrl);
+  async list(): Promise<ApiResponse<T[]>> {
+    let data: T[] = [];
+    const response: ApiResponse<U[]> = await ApiService.get<U[]>(this._apiUrl);
 
-    if (ApiService.isApiError(response)) {
-      return response as ApiError;
+    if (response.ok) {
+      data = (response.data as U[]).map((item) => this._modelFromJSON(item));
     }
 
-    return (response as U[]).map((item) => {
-      return this._modelFromJSON(item);
-    });
+    return {
+      ok: response.ok,
+      data: response.ok ? data : (response.data as ApiError),
+    };
   }
 
-  async find(id: number): Promise<T | ApiError> {
-    const response: U | ApiError = await ApiService.get<U>(`${this._apiUrl}/${id}`);
+  async find(id: number): Promise<ApiResponse<T>> {
+    let data: T;
+    const response: ApiResponse<U> = await ApiService.get<U>(
+      `${this._apiUrl}/${id}`,
+    );
 
-    if (ApiService.isApiError(response)) {
-      return response as ApiError;
+    if (response.ok) {
+      data = this._modelFromJSON(response.data as U);
     }
 
-    return this._modelFromJSON(response as U);
+    return {
+      ok: response.ok,
+      data: response.ok ? data! : (response.data as ApiError),
+    };
   }
 
   private _setApiUrl(modelClass: typeof BaseModel): void {

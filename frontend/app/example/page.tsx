@@ -24,12 +24,7 @@ export default function Example() {
 
   const me = async () => {
     const response = await AuthService.me();
-
-    if (response.hasOwnProperty("id")) {
-      const user = new User();
-      user.fromJSON(response);
-      console.log(user);
-    }
+    console.log(response);
   };
 
   const logLocalStorage = () => {
