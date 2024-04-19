@@ -4,7 +4,7 @@ require "rspec/rails"
 
 RSpec.configure do |config|
   config.before(:each, type: :request) do
-
+    # instance variables
   end
 
   config.expect_with :rspec do |expectations|

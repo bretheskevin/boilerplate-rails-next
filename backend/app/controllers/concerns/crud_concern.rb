@@ -2,7 +2,7 @@ module CrudConcern
   extend ActiveSupport::Concern
 
   included do
-    before_action :set_object, only: %i[edit update destroy show]
+    before_action :set_object, only: %i[update destroy show]
   end
 
   def index
@@ -14,7 +14,7 @@ module CrudConcern
 
   def show
     if @object.nil?
-      render json: { error: "#{base_class.model_name.human} not found", error_description: [] }, status: 404
+      render json: { error: "#{base_class.model_name.human} not found", error_description: [] }, status: :not_found
       return
     end
 
@@ -89,6 +89,6 @@ module CrudConcern
   end
 
   def objects_query
-    object_class.all.order(base_class.default_sort)
+    object_class.order(base_class.default_sort)
   end
 end

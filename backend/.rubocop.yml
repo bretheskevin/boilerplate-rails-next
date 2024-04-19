@@ -10,6 +10,7 @@ AllCops:
     - '**/db/**/*'
     - '**/config/**/*'
   NewCops: enable
+  SuggestExtensions: false
 Security/YAMLLoad:
   Enabled: false
 Style/EmptyMethod:
@@ -66,3 +67,5 @@ Style/TrailingCommaInArguments:
   EnforcedStyleForMultiline: comma
 Layout/ArrayAlignment:
   EnforcedStyle: with_fixed_indentation
+RSpec/MultipleExpectations:
+  Max: 5
