@@ -4,8 +4,7 @@ import { AuthService } from "@services/auth.service";
 import { User, UserJSON } from "@/core/models/user";
 import { EntityManager } from "@/core/entity_manager";
 
-const buttonStyles =
-  "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded";
+const buttonStyles = "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded";
 
 export default function Example() {
   const register = async () => {

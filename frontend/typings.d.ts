@@ -7,5 +7,5 @@ declare type ApiError = {
 
 declare type ApiResponse<T> = {
   ok: boolean;
-  data?: T | ApiError;
+  data: T | ApiError;
 };

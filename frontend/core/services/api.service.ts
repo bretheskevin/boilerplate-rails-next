@@ -50,9 +50,7 @@ export class ApiService {
     };
   }
 
-  private static async _buildResponse<T>(
-    response: Response,
-  ): Promise<ApiResponse<T>> {
+  private static async _buildResponse<T>(response: Response): Promise<ApiResponse<T>> {
     const data = await response.json();
 
     return {

@@ -2,8 +2,8 @@ import { BaseModel, BaseModelJSON } from "@/core/models/base_model";
 import { ApiService } from "@services/api.service";
 
 export class EntityManager<T extends BaseModel, U extends BaseModelJSON> {
-  private _apiUrl: string = "";
   public _modelClass: typeof BaseModel;
+  private _apiUrl: string = "";
 
   constructor(modelClass: typeof BaseModel) {
     this._setApiUrl(modelClass);
@@ -26,9 +26,7 @@ export class EntityManager<T extends BaseModel, U extends BaseModelJSON> {
 
   async find(id: number): Promise<ApiResponse<T>> {
     let data: T;
-    const response: ApiResponse<U> = await ApiService.get<U>(
-      `${this._apiUrl}/${id}`,
-    );
+    const response: ApiResponse<U> = await ApiService.get<U>(`${this._apiUrl}/${id}`);
 
     if (response.ok) {
       data = this._modelFromJSON(response.data as U);
