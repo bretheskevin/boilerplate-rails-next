@@ -10,36 +10,23 @@ interface DeviseSuccessResponse {
 }
 
 export class AuthService {
-  static async register(
-    email: string,
-    password: string,
-  ): Promise<ApiResponse<DeviseSuccessResponse>> {
-    const response = await ApiService.post<DeviseSuccessResponse>(
-      "users/tokens/sign_up",
-      { email, password },
-    );
+  static async register(email: string, password: string): Promise<ApiResponse<DeviseSuccessResponse>> {
+    const response = await ApiService.post<DeviseSuccessResponse>("users/tokens/sign_up", { email, password });
 
     this._storeTokens(response);
 
     return response;
   }
 
-  static async login(
-    email: string,
-    password: string,
-  ): Promise<ApiResponse<DeviseSuccessResponse>> {
-    const response = await ApiService.post<DeviseSuccessResponse>(
-      "users/tokens/sign_in",
-      { email, password },
-    );
+  static async login(email: string, password: string): Promise<ApiResponse<DeviseSuccessResponse>> {
+    const response = await ApiService.post<DeviseSuccessResponse>("users/tokens/sign_in", { email, password });
 
     this._storeTokens(response);
     return response;
   }
 
   static async me(): Promise<ApiResponse<User>> {
-    const response: ApiResponse<UserJSON> =
-      await ApiService.get<UserJSON>("users/tokens/info");
+    const response: ApiResponse<UserJSON> = await ApiService.get<UserJSON>("users/tokens/info");
 
     if (response.ok) {
       const user = new User();
