@@ -30,12 +30,12 @@ export class ApiService {
     return await this._buildResponse<T>(response);
   }
 
-  static async delete<T>(url: string): Promise<ApiResponse<T>> {
+  static async delete(url: string): Promise<ApiResponse<null>> {
     const response = await fetch(this._buildUrl(url), {
       method: "DELETE",
     });
 
-    return await this._buildResponse<T>(response);
+    return await this._buildResponse<null>(response);
   }
 
   private static _buildUrl(path: string): string {

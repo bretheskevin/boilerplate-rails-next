@@ -54,6 +54,29 @@ export class EntityManager<T extends BaseModel, U extends BaseModelJSON> {
     };
   }
 
+  async update(id: number, body: JSONObject): Promise<ApiResponse<T>> {
+    let data: T;
+    const response: ApiResponse<U> = await ApiService.patch<U>(`${this._apiUrl}/${id}`, this._bodyWithModelParam(body));
+
+    if (response.ok) {
+      data = this._modelFromJSON(response.data as U);
+    }
+
+    return {
+      ok: response.ok,
+      data: response.ok ? data! : (response.data as ApiError),
+    };
+  }
+
+  async delete(id: number): Promise<ApiResponse<null>> {
+    const response: ApiResponse<null> = await ApiService.delete(`${this._apiUrl}/${id}`);
+
+    return {
+      ok: response.ok,
+      data: response.ok ? null : (response.data as ApiError),
+    };
+  }
+
   private _setApiUrl(modelClass: typeof BaseModel): void {
     const model = new modelClass();
     this._apiUrl = model.apiUrl;

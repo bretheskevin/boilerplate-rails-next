@@ -14,4 +14,8 @@ export class DummyModel extends BaseModel {
     name: "",
     description: "",
   };
+
+  toString(): string {
+    return this.attributes.name;
+  }
 }

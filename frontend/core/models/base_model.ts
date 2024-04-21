@@ -26,4 +26,8 @@ export class BaseModel {
   toJSON(): JSONObject {
     return this.attributes;
   }
+
+  toString(): string {
+    return this.attributes.id.toString();
+  }
 }

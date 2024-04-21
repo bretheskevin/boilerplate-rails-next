@@ -37,6 +37,11 @@ module CrudConcern
   def destroy
     # authorize @object
 
+    if @object.nil?
+      render json: { error: "#{base_class.model_name.human} not found", error_description: [] }, status: :not_found
+      return
+    end
+
     @object.destroy
     render status: :no_content
   end

@@ -3,10 +3,14 @@
 import { AuthService } from "@services/auth.service";
 import { EntityManager } from "@/core/entity_manager";
 import { DummyJSON, DummyModel } from "@/app/example/dummy.model";
+import { useRef } from "react";
 
 const buttonStyles = "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded";
+const btnContainerStyles = "flex items-center justify-center gap-4";
 
 export default function Example() {
+  const counter = useRef<number>(1);
+
   const register = async () => {
     const response = await AuthService.register("example@gmail.com", "password");
     console.log(response);
@@ -55,9 +59,24 @@ export default function Example() {
     console.log(response);
   };
 
+  const patch = async () => {
+    counter.current++;
+
+    const em: EntityManager<DummyModel, DummyJSON> = new EntityManager(DummyModel);
+    const response = await em.update(1, { name: `Dummy Change#${counter.current}`, description: "Description" });
+    console.log(response.data!.toString());
+  };
+
+  const deleteDummy = async () => {
+    console.log("FIND BUTTON SHOULDN'T WORK AFTER THIS");
+    const em: EntityManager<DummyModel, DummyJSON> = new EntityManager(DummyModel);
+    const response = await em.delete(1);
+    console.log(response);
+  };
+
   return (
     <main className="min-h-screen p-24 flex flex-col justify-center gap-4">
-      <div className={"flex items-center justify-center gap-4"}>
+      <div className={btnContainerStyles}>
         <button className={buttonStyles} onClick={register}>
           REGISTER
         </button>
@@ -72,7 +91,7 @@ export default function Example() {
         </button>
       </div>
 
-      <div className={"flex items-center justify-center gap-4"}>
+      <div className={btnContainerStyles}>
         <button className={buttonStyles} onClick={me}>
           ME
         </button>
@@ -91,6 +110,16 @@ export default function Example() {
 
         <button className={buttonStyles} onClick={create}>
           CREATE
+        </button>
+      </div>
+
+      <div className={btnContainerStyles}>
+        <button className={buttonStyles} onClick={patch}>
+          PATCH
+        </button>
+
+        <button className={buttonStyles} onClick={deleteDummy}>
+          DELETE
         </button>
       </div>
     </main>

@@ -62,5 +62,11 @@ describe "Dummies" do
       delete "/dummies/#{dummy.id}"
       expect(response).to have_http_status(:no_content)
     end
+
+    it "returns an error response" do
+      delete "/dummies/0"
+      expect(response).to have_http_status(:not_found)
+      expect(json).to have_key("error")
+    end
   end
 end
