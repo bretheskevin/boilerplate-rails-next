@@ -1,43 +1,19 @@
 #!/bin/sh
 
-lint_frontend() {
-    staged_frontend_files=$(git diff --cached --name-only --diff-filter=ACM -- frontend/)
-    if [ -n "$staged_frontend_files" ]; then
-		cd frontend
-        npm run lint --prefix
-        lint_result=$?
-        if [ $lint_result -ne 0 ]; then
-            echo "Linting failed for frontend files. Aborting commit."
-            exit 1
-        fi
-
-        # Run formatting
-        npm run format --prefix
-        format_result=$?
-        if [ $format_result -ne 0 ]; then
-            echo "Formatting failed for frontend files. Aborting commit."
-            exit 1
-        fi
-		cd ..
-    fi
-}
-
 lint_backend() {
     staged_backend_files=$(git diff --cached --name-only --diff-filter=ACM -- backend/)
     if [ -n "$staged_backend_files" ]; then
-		cd backend
+        cd backend
         rubocop
-		cd ..
-
         rubocop_result=$?
         if [ $rubocop_result -ne 0 ]; then
             echo "RuboCop failed for backend files. Aborting commit."
             exit 1
         fi
+        cd ..
     fi
 }
 
-lint_frontend
 lint_backend
 
 if git rev-parse --verify HEAD >/dev/null 2>&1

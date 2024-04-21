@@ -1,12 +1,12 @@
 import { ApiService } from "@/core/services/api.service";
-import { UserModel, UserJSON } from "@/core/models/user.model";
+import { UserJSON, UserModel } from "@/core/models/user.model";
 
 interface DeviseSuccessResponse {
   expires_in: number;
   refresh_token: string;
   token_type: string;
   token: string;
-  resource_owner: JSONObject;
+  resource_owner: UserJSON;
 }
 
 export class AuthService {
