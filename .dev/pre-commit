@@ -1,20 +1,33 @@
 #!/bin/sh
 
-lint_backend() {
+PROJECT_NAME="project"
+
+backend_precommit() {
     staged_backend_files=$(git diff --cached --name-only --diff-filter=ACM -- backend/)
     if [ -n "$staged_backend_files" ]; then
         cd backend
+
+        echo "Running RSpec tests..."
+        docker exec "$PROJECT_NAME-backend" bash -c "RAILS_ENV=test rspec"
+        rspec_result=$?
+        if [ $rspec_result -ne 0 ]; then
+            echo "RSpec failed for backend files. Aborting commit."
+            exit 1
+        fi
+
+
         rubocop
         rubocop_result=$?
         if [ $rubocop_result -ne 0 ]; then
             echo "RuboCop failed for backend files. Aborting commit."
             exit 1
         fi
+
         cd ..
     fi
 }
 
-lint_backend
+backend_precommit
 
 if git rev-parse --verify HEAD >/dev/null 2>&1
 then
