@@ -6,8 +6,4 @@ class DummiesController < ApplicationController
   def object_class
     base_class
   end
-
-  def model_params
-    :dummy
-  end
 end

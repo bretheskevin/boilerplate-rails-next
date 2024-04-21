@@ -3,6 +3,7 @@ module CrudConcern
 
   included do
     before_action :set_object, only: %i[update destroy show]
+    before_action :check_required_param, only: %i[create update]
   end
 
   def index
@@ -23,7 +24,6 @@ module CrudConcern
 
   def create
     # authorize object_class
-
     @object = object_class.new
     process_object
   end
@@ -53,14 +53,14 @@ module CrudConcern
     false
   end
 
-  def model_params
-    raise NotImplementedError
-  end
-
   private
 
+  def model_param
+    base_class.model_name.singular
+  end
+
   def strong_params
-    params.require(model_params).permit(base_class.strong_params)
+    params.require(model_param).permit(base_class.strong_params)
   end
 
   def set_object
@@ -90,5 +90,12 @@ module CrudConcern
 
   def objects_query
     object_class.order(base_class.default_sort)
+  end
+
+  def check_required_param
+    return if params[model_param].present?
+
+    render json: { error: I18n.t("errors.messages.missing_params"), error_description: [model_param] }, status: :unprocessable_entity
+    false
   end
 end

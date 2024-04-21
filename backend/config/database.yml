@@ -10,12 +10,12 @@ default: &default
 
 development:
   <<: *default
-  database: mateleau_development
+  database: project_development
 
 test:
   <<: *default
-  database: mateleau_test
+  database: project_test
 
 production:
   <<: *default
-  database: mateleau_production
+  database: project_production

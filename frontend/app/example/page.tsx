@@ -1,8 +1,8 @@
 "use client";
 
 import { AuthService } from "@services/auth.service";
-import { User, UserJSON } from "@/core/models/user";
 import { EntityManager } from "@/core/entity_manager";
+import { DummyJSON, DummyModel } from "@/app/example/dummy.model";
 
 const buttonStyles = "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded";
 
@@ -32,20 +32,26 @@ export default function Example() {
   };
 
   const list = async () => {
-    const em: EntityManager<User, UserJSON> = new EntityManager(User);
+    const em: EntityManager<DummyModel, DummyJSON> = new EntityManager(DummyModel);
     const response = await em.list();
     console.log(response);
   };
 
   const find = async () => {
-    const em: EntityManager<User, UserJSON> = new EntityManager(User);
+    const em: EntityManager<DummyModel, DummyJSON> = new EntityManager(DummyModel);
     const response = await em.find(1);
     console.log(response);
   };
 
   const findNotFound = async () => {
-    const em: EntityManager<User, UserJSON> = new EntityManager(User);
+    const em: EntityManager<DummyModel, DummyJSON> = new EntityManager(DummyModel);
     const response = await em.find(0);
+    console.log(response);
+  };
+
+  const create = async () => {
+    const em: EntityManager<DummyModel, DummyJSON> = new EntityManager(DummyModel);
+    const response = await em.create({ name: "Dummy", description: "Description" });
     console.log(response);
   };
 
@@ -81,6 +87,10 @@ export default function Example() {
 
         <button className={buttonStyles} onClick={findNotFound}>
           FIND NOT FOUND
+        </button>
+
+        <button className={buttonStyles} onClick={create}>
+          CREATE
         </button>
       </div>
     </main>

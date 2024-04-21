@@ -1,2 +1,4 @@
 en:
-  hello: "Hello world"
+  errors:
+    messages:
+      missing_params: "Missing required parameters"

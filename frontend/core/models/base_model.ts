@@ -6,6 +6,7 @@ export interface BaseModelJSON {
 
 export class BaseModel {
   apiUrl: string = "";
+  modelParam: string = "";
 
   attributes: BaseModelJSON = {
     id: 0,

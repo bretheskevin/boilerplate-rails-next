@@ -40,6 +40,12 @@ describe "Dummies" do
 
       expect(Dummy.count).to eq(3)
     end
+
+    it "returns an error response" do
+      post "/dummies", params: { dummy: { description: "Hello" } }
+      expect(response).to have_http_status(:unprocessable_entity)
+      expect(json).to have_key("error")
+    end
   end
 
   describe "PATCH #update" do
