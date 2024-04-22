@@ -55,6 +55,12 @@ describe "Dummies" do
       expect(json["name"]).to eq("New title")
       expect(json["description"]).to eq(dummy.description)
     end
+
+    it "returns an error response" do
+      patch "/dummies/0", params: { dummy: { name: "New title" } }
+      expect(response).to have_http_status(:not_found)
+      expect(json).to have_key("error")
+    end
   end
 
   describe "DELETE #destroy" do

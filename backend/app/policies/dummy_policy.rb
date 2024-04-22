@@ -1,0 +1,2 @@
+class DummyPolicy < ApplicationPolicy
+end

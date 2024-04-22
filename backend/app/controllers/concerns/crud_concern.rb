@@ -7,13 +7,15 @@ module CrudConcern
   end
 
   def index
-    # authorize base_class
+    authorize base_class
 
     @objects = object_class.all
     render json: @objects
   end
 
   def show
+    authorize @object
+
     if @object.nil?
       render json: { error: "#{base_class.model_name.human} not found", error_description: [] }, status: :not_found
       return
@@ -23,24 +25,20 @@ module CrudConcern
   end
 
   def create
-    # authorize object_class
+    authorize object_class
+
     @object = object_class.new
     process_object
   end
 
   def update
-    # authorize @object
+    authorize @object
 
     process_object
   end
 
   def destroy
-    # authorize @object
-
-    if @object.nil?
-      render json: { error: "#{base_class.model_name.human} not found", error_description: [] }, status: :not_found
-      return
-    end
+    authorize @object
 
     @object.destroy
     render status: :no_content
@@ -69,9 +67,12 @@ module CrudConcern
   end
 
   def set_object
-    return @object = object_class.find_by(slug: params[:slug]) if use_slug?
-
     @object = object_class.find_by(id: params[:id])
+    @object = object_class.find_by(slug: params[:slug]) if use_slug?
+
+    return unless @object.nil?
+
+    render json: { error: "#{base_class.model_name.human} not found", error_description: [] }, status: :not_found
   end
 
   def process_object
