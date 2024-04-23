@@ -1,24 +1,22 @@
 bash_completion() {
   sudo apt install bash-completion
 
+  commands="build start console"
+
   if ! grep -q "alias kb_path='$(pwd)'" ~/.bashrc; then
     echo "alias kb_path='$(pwd)'" >> ~/.bashrc
   fi
 
-  if ! grep -q "alias kb='$(pwd)/kb.sh'" ~/.bashrc; then
-    echo "alias kb='$(pwd)/kb.sh'" >> ~/.bashrc
+  if ! grep -q "alias kb='$(pwd)/.dev/kb.sh'" ~/.bashrc; then
+    echo "alias kb='$(pwd)/.dev/kb.sh'" >> ~/.bashrc
   fi
 
   if ! grep -q "source /etc/profile.d/bash_completion.sh" ~/.bashrc; then
     echo "source /etc/profile.d/bash_completion.sh" >> ~/.bashrc
   fi
 
-  if ! grep -q "complete -W 'setup build start console' ./kb.sh" ~/.bashrc; then
-    echo "complete -W 'build start console' ./kb.sh" >> ~/.bashrc
-  fi
-
-  if ! grep -q "complete -W 'setup build start console' kb" ~/.bashrc; then
-    echo "complete -W 'build start console' kb" >> ~/.bashrc
+  if ! grep -q "complete -W '${commands}' kb" ~/.bashrc; then
+    echo "complete -W '${commands}' kb" >> ~/.bashrc
   fi
 }
 

@@ -7,7 +7,7 @@ Fill the .env file with your own values
 The following script will :
 
 - Install the pre-commit hooks
-- Add an alias named `kb` to the `kb.sh` file
+- Add an alias named `kb` to the `.dev/kb.sh` file
 - Add auto-completion for the `kb` alias
 
 ```bash
