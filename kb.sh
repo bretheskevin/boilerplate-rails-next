@@ -1,33 +1,32 @@
 #!/bin/bash
 
-setup() {
-    PROJECT_NAME=$(grep -oP '(?<=PROJECT_NAME=").*(?=")' .env)
-    sed -i "s/PROJECT_NAME=\".*\"/PROJECT_NAME=\"$PROJECT_NAME\"/g" .dev/pre-commit
-    cp .dev/pre-commit .git/hooks/pre-commit
-}
+project_root=$(grep -oP "(?<=alias kb_path=')[^']+" ~/.bashrc)
+
+if [ -d "$project_root" ]; then
+  cd "$project_root" || { echo "Failed to change directory to $project_root"; return 1; }
+fi
 
 build() {
-    docker-compose build
+  cd "$project_root" || { echo "Failed to change directory to $project_root"; return 1; }
+
+  docker-compose build
 }
 
 start() {
-    rm -f backend/tmp/pids/server.pid
-    docker-compose up
+  rm -f backend/tmp/pids/server.pid
+  docker-compose down
+  docker-compose up
 }
 
 console() {
-    export $(grep -v '^#' .env | xargs)
-    docker exec -it $PROJECT_NAME-backend bash
-}
+  cd "$project_root" || { echo "Failed to change directory to $project_root"; return 1; }
 
-rails_console() {
-    export $(grep -v '^#' .env | xargs)
-    docker exec -it $PROJECT_NAME-backend rails console
+  export $(grep -v '^#' .env | xargs)
+  docker exec -it $PROJECT_NAME-backend bash
 }
 
 help() {
-    echo "Usage: $0 {setup|build|start|console}"
-    echo "    setup: Set up the project by configuring pre-commit hook"
+    echo "Usage: {build|start|console}"
     echo "    build: Build the project using docker-compose"
     echo "    start: Start the project by cleaning up and bringing up docker containers"
     echo "    console: Enter the backend container's console"
@@ -39,9 +38,6 @@ if [ $# -eq 0 ]; then
 fi
 
 case "$1" in
-    "setup")
-        setup
-        ;;
     "build")
         build
         ;;

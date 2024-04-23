@@ -2,26 +2,18 @@
 
 Fill the .env file with your own values
 
-## Install the precommit hooks
+## Set up the project
 
-It will run rubocop and rspec before each commit
+The following script will :
+
+- Install the pre-commit hooks
+- Add an alias named `kb` to the `kb.sh` file
+- Add auto-completion for the `kb` alias
 
 ```bash
 ./setup.sh
 ```
 
-## Build and run the docker containers
+**Make sure to restart your terminal or source the `.bashrc` file**
 
-```bash
-./build_project.sh
-./start_project.sh
-```
-
-## Enter into the backend container
-
-/!\ If you use a `rails generate` command, you will need to add the user permission to edit the file
-from your IDE. Run `chmod 777 -R .` in the backend container to fix this issue.
-
-```bash
-./exec_backend_console.sh
-```
+Execute `kb` to see the available commands
