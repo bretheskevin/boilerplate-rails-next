@@ -1,6 +1,6 @@
-import { BaseModel, BaseModelJSON } from "@/core/models/base_model";
+import { BaseModel, IBaseModel } from "@/core/models/base_model";
 
-export interface UserJSON extends BaseModelJSON {
+export interface IUser extends IBaseModel {
   email: string;
   role: string;
 }
@@ -9,7 +9,7 @@ export class UserModel extends BaseModel {
   apiUrl = "users";
   modelParam = "user";
 
-  attributes: UserJSON = {
+  attributes: IUser = {
     ...this.attributes,
     email: "",
     role: "",

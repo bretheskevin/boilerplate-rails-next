@@ -1,12 +1,12 @@
 import { ApiService } from "@/core/services/api.service";
-import { UserJSON, UserModel } from "@/core/models/user.model";
+import { IUser, UserModel } from "@/core/models/user.model";
 
 interface DeviseSuccessResponse {
   expires_in: number;
   refresh_token: string;
   token_type: string;
   token: string;
-  resource_owner: UserJSON;
+  resource_owner: IUser;
 }
 
 export class AuthService {
@@ -26,11 +26,11 @@ export class AuthService {
   }
 
   static async me(): Promise<ApiResponse<UserModel>> {
-    const response: ApiResponse<UserJSON> = await ApiService.get<UserJSON>("users/tokens/info");
+    const response: ApiResponse<IUser> = await ApiService.get<IUser>("users/tokens/info");
 
     if (response.ok) {
       const user = new UserModel();
-      user.fromJSON(response.data as UserJSON);
+      user.fromJSON(response.data as IUser);
       return { ok: true, data: user };
     }
 

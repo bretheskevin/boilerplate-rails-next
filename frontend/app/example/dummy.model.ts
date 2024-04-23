@@ -1,6 +1,6 @@
-import { BaseModel, BaseModelJSON } from "@/core/models/base_model";
+import { BaseModel, IBaseModel } from "@/core/models/base_model";
 
-export interface DummyJSON extends BaseModelJSON {
+export interface IDummy extends IBaseModel {
   name: string;
   description: string;
 }
@@ -9,7 +9,7 @@ export class DummyModel extends BaseModel {
   apiUrl = "dummies";
   modelParam = "dummy";
 
-  attributes: DummyJSON = {
+  attributes: IDummy = {
     ...this.attributes,
     name: "",
     description: "",

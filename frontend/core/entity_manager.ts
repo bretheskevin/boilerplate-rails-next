@@ -1,4 +1,4 @@
-import { BaseModel, BaseModelJSON } from "@/core/models/base_model";
+import { BaseModel, IBaseModel } from "@/core/models/base_model";
 import { ApiService } from "@services/api.service";
 
 export interface ListParams {
@@ -6,7 +6,7 @@ export interface ListParams {
   perPage?: number;
 }
 
-export class EntityManager<T extends BaseModel, U extends BaseModelJSON> {
+export class EntityManager<T extends BaseModel, U extends IBaseModel> {
   public _modelClass: typeof BaseModel;
   public _modelInstance: T;
   private _apiUrl: string = "";

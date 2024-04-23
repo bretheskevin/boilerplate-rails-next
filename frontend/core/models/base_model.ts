@@ -1,4 +1,4 @@
-export interface BaseModelJSON {
+export interface IBaseModel {
   id: number;
   created_at: string;
   updated_at: string;
@@ -8,7 +8,7 @@ export class BaseModel {
   apiUrl: string = "";
   modelParam: string = "";
 
-  attributes: BaseModelJSON = {
+  attributes: IBaseModel = {
     id: 0,
     created_at: "",
     updated_at: "",

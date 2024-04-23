@@ -2,7 +2,7 @@
 
 import { AuthService } from "@services/auth.service";
 import { EntityManager } from "@/core/entity_manager";
-import { DummyJSON, DummyModel } from "@/app/example/dummy.model";
+import { DummyModel, IDummy } from "@/app/example/dummy.model";
 import { useRef } from "react";
 
 const buttonStyles = "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded";
@@ -36,13 +36,13 @@ export default function Example() {
   };
 
   const list = async () => {
-    const em: EntityManager<DummyModel, DummyJSON> = new EntityManager(DummyModel);
+    const em: EntityManager<DummyModel, IDummy> = new EntityManager(DummyModel);
     const response = await em.list();
     console.log(response);
   };
 
   const list2 = async () => {
-    const em: EntityManager<DummyModel, DummyJSON> = new EntityManager(DummyModel);
+    const em: EntityManager<DummyModel, IDummy> = new EntityManager(DummyModel);
     const response = await em.list({
       page: 2,
       perPage: 10,
@@ -51,19 +51,19 @@ export default function Example() {
   };
 
   const find = async () => {
-    const em: EntityManager<DummyModel, DummyJSON> = new EntityManager(DummyModel);
+    const em: EntityManager<DummyModel, IDummy> = new EntityManager(DummyModel);
     const response = await em.find(1);
     console.log(response);
   };
 
   const findNotFound = async () => {
-    const em: EntityManager<DummyModel, DummyJSON> = new EntityManager(DummyModel);
+    const em: EntityManager<DummyModel, IDummy> = new EntityManager(DummyModel);
     const response = await em.find(0);
     console.log(response);
   };
 
   const create = async () => {
-    const em: EntityManager<DummyModel, DummyJSON> = new EntityManager(DummyModel);
+    const em: EntityManager<DummyModel, IDummy> = new EntityManager(DummyModel);
     const response = await em.create({ name: "Dummy", description: "Description" });
     console.log(response);
   };
@@ -71,14 +71,14 @@ export default function Example() {
   const patch = async () => {
     counter.current++;
 
-    const em: EntityManager<DummyModel, DummyJSON> = new EntityManager(DummyModel);
+    const em: EntityManager<DummyModel, IDummy> = new EntityManager(DummyModel);
     const response = await em.update(1, { name: `Dummy Change#${counter.current}`, description: "Description" });
     console.log(response.data!.toString());
   };
 
   const deleteDummy = async () => {
     console.log("FIND BUTTON SHOULDN'T WORK AFTER THIS");
-    const em: EntityManager<DummyModel, DummyJSON> = new EntityManager(DummyModel);
+    const em: EntityManager<DummyModel, IDummy> = new EntityManager(DummyModel);
     const response = await em.delete(1);
     console.log(response);
   };
