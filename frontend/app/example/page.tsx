@@ -41,6 +41,15 @@ export default function Example() {
     console.log(response);
   };
 
+  const list2 = async () => {
+    const em: EntityManager<DummyModel, DummyJSON> = new EntityManager(DummyModel);
+    const response = await em.list({
+      page: 2,
+      perPage: 10,
+    });
+    console.log(response);
+  };
+
   const find = async () => {
     const em: EntityManager<DummyModel, DummyJSON> = new EntityManager(DummyModel);
     const response = await em.find(1);
@@ -98,6 +107,10 @@ export default function Example() {
 
         <button className={buttonStyles} onClick={list}>
           LIST
+        </button>
+
+        <button className={buttonStyles} onClick={list2}>
+          LIST 2
         </button>
 
         <button className={buttonStyles} onClick={find}>

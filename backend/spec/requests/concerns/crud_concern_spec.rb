@@ -13,7 +13,7 @@ describe "Dummies" do
     it "returns a success response" do
       get "/dummies"
       expect(response).to be_successful
-      expect(json.count).to eq(2)
+      expect(json["models"].count).to eq(2)
     end
   end
 

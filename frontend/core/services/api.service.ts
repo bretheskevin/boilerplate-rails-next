@@ -1,8 +1,8 @@
 export class ApiService {
   private static _baseUrl: string = "/api/";
 
-  static async get<T>(url: string): Promise<ApiResponse<T>> {
-    const response = await fetch(this._buildUrl(url), {
+  static async get<T>(url: string, params: JSONObject = {}): Promise<ApiResponse<T>> {
+    const response = await fetch(this._buildUrl(url, params), {
       method: "GET",
       headers: this._buildHeaders(),
     });
@@ -38,8 +38,14 @@ export class ApiService {
     return await this._buildResponse<null>(response);
   }
 
-  private static _buildUrl(path: string): string {
+  private static _buildUrl(path: string, params: JSONObject = {}): string {
     const url: URL = new URL(this._baseUrl + path, window.location.origin);
+
+    for (const [key, value] of Object.entries(params)) {
+      const snakeKey = key.replace(/([A-Z])/g, "_$1").toLowerCase();
+      url.searchParams.append(snakeKey, value);
+    }
+
     return url.toString();
   }
 

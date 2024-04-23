@@ -1,7 +1,7 @@
-require Rails.root.join('lib', 'kb', 'crud_route_concern')
+require Rails.root.join("lib/kb/crud_route_concern")
 
 Rails.application.routes.draw do
-  concern :kb_crud, ::KB::CrudRouteConcern.new
+  concern :kb_crud, KB::CrudRouteConcern.new
 
   devise_for :users
 

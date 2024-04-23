@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require Rails.root.join('lib', 'devise', 'api', 'responses', 'token_response_decorator')
+require Rails.root.join("lib/devise/api/responses/token_response_decorator")
 
 Devise.setup do |config|
-  config.mailer_sender = 'please-change-me-at-config-initializers-devise@example.com'
+  config.mailer_sender = "please-change-me-at-config-initializers-devise@example.com"
 
-  require 'devise/orm/active_record'
+  require "devise/orm/active_record"
 
   config.case_insensitive_keys = [:email]
 

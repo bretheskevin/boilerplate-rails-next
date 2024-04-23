@@ -1,6 +1,11 @@
 import { BaseModel, BaseModelJSON } from "@/core/models/base_model";
 import { ApiService } from "@services/api.service";
 
+export interface ListParams {
+  page?: number;
+  perPage?: number;
+}
+
 export class EntityManager<T extends BaseModel, U extends BaseModelJSON> {
   public _modelClass: typeof BaseModel;
   public _modelInstance: T;
@@ -12,17 +17,19 @@ export class EntityManager<T extends BaseModel, U extends BaseModelJSON> {
     this._modelInstance = new modelClass() as T;
   }
 
-  async list(): Promise<ApiResponse<T[]>> {
-    let data: T[];
-    const response: ApiResponse<U[]> = await ApiService.get<U[]>(this._apiUrl);
+  async list(params: ListParams = {}): Promise<ApiResponse<ApiModelListResponse<T>>> {
+    const response: ApiResponse<ApiModelListResponse<U>> = await ApiService.get<ApiModelListResponse<U>>(
+      this._apiUrl,
+      params,
+    );
 
-    if (response.ok) {
-      data = (response.data as U[]).map((item) => this._modelFromJSON(item));
-    }
+    let data: ApiModelListResponse<T> | ApiError = response.ok
+      ? this._transformListResponse(response.data as ApiModelListResponse<U>)
+      : (response.data as ApiError);
 
     return {
       ok: response.ok,
-      data: response.ok ? data! : (response.data as ApiError),
+      data: data,
     };
   }
 
@@ -95,5 +102,16 @@ export class EntityManager<T extends BaseModel, U extends BaseModelJSON> {
     bodyWithParam[modelParam] = body;
 
     return bodyWithParam;
+  }
+
+  private _transformListResponse(apiResponse: ApiModelListResponse<U>): ApiModelListResponse<T> {
+    const models = apiResponse.models.map((modelJSON: U) => this._modelFromJSON(modelJSON));
+
+    const transformedResponse: ApiModelListResponse<T> = {
+      ...apiResponse,
+      models,
+    };
+
+    return transformedResponse;
   }
 }

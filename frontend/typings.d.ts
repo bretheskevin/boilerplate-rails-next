@@ -9,3 +9,11 @@ declare type ApiResponse<T> = {
   ok: boolean;
   data: T | ApiError;
 };
+
+declare type ApiModelListResponse<T> = {
+  models: T[];
+  current_page: number;
+  total_pages: number;
+  per_page: number;
+  total_objects: number;
+};

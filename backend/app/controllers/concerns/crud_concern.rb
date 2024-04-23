@@ -9,7 +9,10 @@ module CrudConcern
   def index
     authorize base_class
 
-    @objects = object_class.all
+    init_pagination
+
+    @objects = objects_paginated
+
     render json: @objects
   end
 
@@ -91,7 +94,7 @@ module CrudConcern
   end
 
   def total_objects
-    objects_query.count.to_f
+    objects_query.count
   end
 
   def objects_query
@@ -103,5 +106,23 @@ module CrudConcern
 
     render json: { error: I18n.t("errors.messages.missing_params"), error_description: [model_param] }, status: :unprocessable_entity
     false
+  end
+
+  def init_pagination
+    @per_page = params[:per_page].present? ? params[:per_page].to_i : 20
+    @page = params[:page].present? ? params[:page].to_i : 1
+    @total_pages = (total_objects / @per_page.to_f).ceil
+  end
+
+  def objects_paginated
+    models = objects_query.page(@page).per(@per_page)
+
+    {
+      models: models,
+      current_page: @page,
+      total_pages: @total_pages,
+      per_page: @per_page,
+      total_objects: total_objects
+    }
   end
 end
