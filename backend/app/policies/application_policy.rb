@@ -13,7 +13,7 @@ class ApplicationPolicy
   end
 
   def show?
-    true
+    index?
   end
 
   def create?

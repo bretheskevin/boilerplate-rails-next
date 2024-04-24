@@ -48,7 +48,7 @@ module CrudConcern
   end
 
   def base_class
-    raise NotImplementedError
+    controller_name.classify.constantize
   end
 
   def object_class

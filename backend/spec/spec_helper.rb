@@ -4,7 +4,17 @@ require "rspec/rails"
 
 RSpec.configure do |config|
   config.before(:each, type: :request) do
-    # instance variables
+    @user = create(:user)
+    @admin = create(:admin)
+
+    post "/users/tokens/sign_in", params: { email: @user.email, password: @user.password }
+    user_token = json["token"]
+
+    post "/users/tokens/sign_in", params: { email: @admin.email, password: @admin.password }
+    admin_token = json["token"]
+
+    @user_header = { Authorization: "Bearer #{user_token}" }
+    @admin_header = { Authorization: "Bearer #{admin_token}" }
   end
 
   config.expect_with :rspec do |expectations|

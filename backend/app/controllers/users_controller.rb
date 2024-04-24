@@ -1,7 +1,5 @@
 class UsersController < ApplicationController
-  def base_class
-    ::User
-  end
+  before_action :authenticate_devise_api_token!
 
   def object_class
     base_class

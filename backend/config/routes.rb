@@ -7,8 +7,9 @@ Rails.application.routes.draw do
 
   get "up" => "rails/health#show", as: :rails_health_check
 
-  resources :dummies
+  resources :dummies, concerns: :kb_crud
 
-  get "/users" => "users#index"
-  get "/users/:id" => "users#show"
+  resources :users, concerns: :kb_crud, :controller => "users"
+
+  match '*unmatched', to: 'application#not_found', via: :all
 end
