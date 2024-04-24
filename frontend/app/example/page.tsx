@@ -73,7 +73,8 @@ export default function Example() {
 
     const em: EntityManager<DummyModel, IDummy> = new EntityManager(DummyModel);
     const response = await em.update(1, { name: `Dummy Change#${counter.current}`, description: "Description" });
-    console.log(response.data!.toString());
+    console.log(response.data);
+    console.log(response.data.toString());
   };
 
   const deleteDummy = async () => {

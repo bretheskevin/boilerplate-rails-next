@@ -7,7 +7,7 @@ backend_precommit() {
     if [ -n "$staged_backend_files" ]; then
         cd backend
 
-        rubocop
+        docker exec "$PROJECT_NAME-backend" bash -c "rubocop"
         rubocop_result=$?
         if [ $rubocop_result -ne 0 ]; then
             echo "RuboCop failed for backend files. Aborting commit."

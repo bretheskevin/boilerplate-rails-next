@@ -1,9 +1,11 @@
 # Template Next.js / Ruby on Rails
 
-## Environment
+## Prerequisites
 
-- Linux (Debian)
-- Docker
+- bash (The setup script use the .bashrc for aliases)
+- [Docker](https://docs.docker.com/engine/install/)
+- [Docker Compose](https://docs.docker.com/compose/install/linux/)
+  - /!\ It won't work with the old version that uses `docker-compose`, you need to install the latest one that use `docker compose`
 
 ## Get started
 
@@ -44,7 +46,6 @@ If it only works by specifying the port, you can try to open the page in a priva
 - [x] Serializer
 - [x] Authentication with devise
 - [x] Pundit gem for authorization (roles)
-- [ ] Admin can edit users
 
 **Frontend**
 
@@ -59,4 +60,3 @@ If it only works by specifying the port, you can try to open the page in a priva
 - [x] EntityManager (automatically fetch data from the API)
 - [x] Model
 - [x] Example page with some entity manager actions
-- [ ] Admin dashboard to manage users

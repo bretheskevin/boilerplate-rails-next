@@ -7,23 +7,23 @@ if [ -d "$project_root" ]; then
 fi
 
 build() {
-  docker-compose build
+  docker compose build
 }
 
 start() {
   rm -f backend/tmp/pids/server.pid
-  docker-compose down
-  docker-compose up
+  docker compose down
+  docker compose up
 }
 
 console() {
-  export $(grep -v '^#' .env | xargs)
+  PROJECT_NAME=$(grep -oP '(?<=PROJECT_NAME=").*(?=")' .env)
   docker exec -it $PROJECT_NAME-backend bash
 }
 
 help() {
     echo "Usage: {build|start|console}"
-    echo "    b|build: Build the project using docker-compose"
+    echo "    b|build: Build the project using docker compose"
     echo "    s|start: Start the project by cleaning up and bringing up docker containers"
     echo "    c|console: Enter the backend container's console"
 }

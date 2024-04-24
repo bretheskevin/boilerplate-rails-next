@@ -57,7 +57,7 @@ export class ApiService {
   }
 
   private static async _buildResponse<T>(response: Response): Promise<ApiResponse<T>> {
-    const data = await response.json();
+    const data = response.status === 204 ? null : await response.json();
 
     return {
       ok: response.ok,
