@@ -60,3 +60,7 @@ If it only works by specifying the port, you can try to open the page in a priva
 - [x] EntityManager (automatically fetch data from the API)
 - [x] Model
 - [x] Example page with some entity manager actions
+
+## TODO
+
+- [ ] Return 404 at POST /users (devise make it buggy)
