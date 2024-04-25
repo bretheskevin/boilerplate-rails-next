@@ -1,7 +1,7 @@
 bash_completion() {
   sudo apt install bash-completion
 
-  commands="build start console test"
+  commands="build start console test rubocop"
 
    sed -i "/^alias kb_path=/d" ~/.bashrc
    echo "alias kb_path='$(pwd)'" >> ~/.bashrc

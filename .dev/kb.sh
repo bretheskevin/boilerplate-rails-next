@@ -26,12 +26,18 @@ rspec() {
   docker exec -it $PROJECT_NAME-backend bash -c "RAILS_ENV=test rspec --color $1"
 }
 
+rubocop() {
+  PROJECT_NAME=$(grep -oP '(?<=PROJECT_NAME=").*(?=")' .env)
+  docker exec -it $PROJECT_NAME-backend bash -c "rubocop -A"
+}
+
 help() {
     echo "Usage: {build|start|console}"
     echo "    b|build: Build the project using docker compose"
     echo "    s|start: Start the project by cleaning up and bringing up docker containers"
     echo "    c|console: Enter the backend container's console"
     echo "    t|test: Run RSpec tests"
+    echo "    r|rubocop: Run Rubocop"
 }
 
 if [ $# -eq 0 ]; then
@@ -51,6 +57,9 @@ case "$1" in
     ;;
   t|test)
     rspec "${@:2}"
+    ;;
+  r|rubocop)
+    rubocop
     ;;
   *)
     help
