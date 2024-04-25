@@ -67,6 +67,14 @@ describe "Users" do
     end
   end
 
+  describe "POST #create" do
+    it "does not create a user" do
+      post "/users", headers: @admin_header
+      expect(response).to have_http_status(:not_found)
+      expect(json).to have_key("error")
+    end
+  end
+
   describe "PATCH #update" do
     context "when user is an admin" do
       it "updates the account information" do

@@ -49,6 +49,8 @@ module CrudConcern
 
   def base_class
     controller_name.classify.constantize
+  rescue
+    "not-found"
   end
 
   def object_class
@@ -62,7 +64,9 @@ module CrudConcern
   private
 
   def model_param
-    base_class.model_name.singular
+    return base_class if base_class == "not-found"
+
+    base_class&.model_name&.singular
   end
 
   def strong_params
@@ -102,6 +106,11 @@ module CrudConcern
   end
 
   def check_required_param
+    if model_param == "not-found"
+      render json: { error: "Route not found", error_description: [] }, status: :not_found
+      return
+    end
+
     return if params[model_param].present?
 
     render json: { error: I18n.t("errors.messages.missing_params"), error_description: [model_param] }, status: :unprocessable_entity
