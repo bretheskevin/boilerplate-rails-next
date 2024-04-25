@@ -3,20 +3,18 @@ bash_completion() {
 
   commands="build start console"
 
-  if ! grep -q "alias kb_path='$(pwd)'" ~/.bashrc; then
-    echo "alias kb_path='$(pwd)'" >> ~/.bashrc
-  fi
+   sed -i "/^alias kb_path=/d" ~/.bashrc
+   echo "alias kb_path='$(pwd)'" >> ~/.bashrc
 
-  if ! grep -q "alias kb='$(pwd)/.dev/kb.sh'" ~/.bashrc; then
-    echo "alias kb='$(pwd)/.dev/kb.sh'" >> ~/.bashrc
-  fi
+   sed -i "/^alias kb=/d" ~/.bashrc
+   echo "alias kb='$(pwd)/.dev/kb.sh'" >> ~/.bashrc
 
   if ! grep -q "source /etc/profile.d/bash_completion.sh" ~/.bashrc; then
     echo "source /etc/profile.d/bash_completion.sh" >> ~/.bashrc
   fi
 
   if ! grep -q "complete -W '${commands}' kb" ~/.bashrc; then
-    echo "complete -W '${commands}' kb" >> ~/.bashrc
+    echo "complete -W '${commands}' ka" >> ~/.bashrc
   fi
 }
 
