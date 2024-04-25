@@ -21,11 +21,17 @@ console() {
   docker exec -it $PROJECT_NAME-backend bash
 }
 
+rspec() {
+  PROJECT_NAME=$(grep -oP '(?<=PROJECT_NAME=").*(?=")' .env)
+  docker exec -it $PROJECT_NAME-backend bash -c "RAILS_ENV=test rspec --color $1"
+}
+
 help() {
     echo "Usage: {build|start|console}"
     echo "    b|build: Build the project using docker compose"
     echo "    s|start: Start the project by cleaning up and bringing up docker containers"
     echo "    c|console: Enter the backend container's console"
+    echo "    t|test: Run RSpec tests"
 }
 
 if [ $# -eq 0 ]; then
@@ -42,6 +48,9 @@ case "$1" in
     ;;
   c|console)
     console
+    ;;
+  t|test)
+    rspec "${@:2}"
     ;;
   *)
     help

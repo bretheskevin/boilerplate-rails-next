@@ -7,7 +7,7 @@ backend_precommit() {
     if [ -n "$staged_backend_files" ]; then
         cd backend
 
-        docker exec "$PROJECT_NAME-backend" bash -c "rubocop"
+        docker exec -it "$PROJECT_NAME-backend" bash -c "rubocop"
         rubocop_result=$?
         if [ $rubocop_result -ne 0 ]; then
             echo "RuboCop failed for backend files. Aborting commit."
@@ -15,7 +15,7 @@ backend_precommit() {
         fi
 
         echo "Running RSpec tests..."
-        docker exec "$PROJECT_NAME-backend" bash -c "RAILS_ENV=test rspec"
+        docker exec -it "$PROJECT_NAME-backend" bash -c "RAILS_ENV=test rspec"
         rspec_result=$?
         if [ $rspec_result -ne 0 ]; then
             echo "RSpec failed for backend files. Aborting commit."

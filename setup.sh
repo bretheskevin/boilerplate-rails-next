@@ -1,7 +1,7 @@
 bash_completion() {
   sudo apt install bash-completion
 
-  commands="build start console"
+  commands="build start console test"
 
    sed -i "/^alias kb_path=/d" ~/.bashrc
    echo "alias kb_path='$(pwd)'" >> ~/.bashrc
@@ -14,7 +14,7 @@ bash_completion() {
   fi
 
   if ! grep -q "complete -W '${commands}' kb" ~/.bashrc; then
-    echo "complete -W '${commands}' ka" >> ~/.bashrc
+    echo "complete -W '${commands}' kb" >> ~/.bashrc
   fi
 }
 
