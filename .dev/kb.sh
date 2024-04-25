@@ -18,17 +18,17 @@ start() {
 
 console() {
   PROJECT_NAME=$(grep -oP '(?<=PROJECT_NAME=").*(?=")' .env)
-  docker exec -it $PROJECT_NAME-backend bash
+  docker exec -t $PROJECT_NAME-backend bash
 }
 
 rspec() {
   PROJECT_NAME=$(grep -oP '(?<=PROJECT_NAME=").*(?=")' .env)
-  docker exec -it $PROJECT_NAME-backend bash -c "RAILS_ENV=test rspec --color $1"
+  docker exec -t $PROJECT_NAME-backend bash -c "RAILS_ENV=test rspec --color $1"
 }
 
 rubocop() {
   PROJECT_NAME=$(grep -oP '(?<=PROJECT_NAME=").*(?=")' .env)
-  docker exec -it $PROJECT_NAME-backend bash -c "rubocop -A"
+  docker exec -t $PROJECT_NAME-backend bash -c "rubocop -A"
 }
 
 help() {
