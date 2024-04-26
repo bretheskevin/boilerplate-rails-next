@@ -27,6 +27,14 @@ The following script will :
 
 Execute `kb` to see the available commands
 
+### Commands
+
+- `kb build` : Build the docker container
+- `kb start` : Start / Restart the project
+- `kb console` : Open a bash console in the backend container
+- `kb test` : Run the tests
+- `kb rubocop` : Run rubocop
+
 ## Ports
 
 - Frontend: 4200
