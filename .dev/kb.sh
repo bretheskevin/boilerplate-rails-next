@@ -11,14 +11,16 @@ build() {
 }
 
 start() {
+  PROJECT_NAME=$(grep -oP '(?<=PROJECT_NAME=").*(?=")' .env)
+
   rm -f backend/tmp/pids/server.pid
   docker compose down
-  docker compose up
+  docker compose --project-name $PROJECT_NAME up
 }
 
 console() {
   PROJECT_NAME=$(grep -oP '(?<=PROJECT_NAME=").*(?=")' .env)
-  docker exec -t $PROJECT_NAME-backend bash
+  docker exec -it $PROJECT_NAME-backend bash
 }
 
 rspec() {

@@ -37,11 +37,10 @@ Execute `kb` to see the available commands
 
 ## Ports
 
-- Frontend: 4200
-- Backend: 3000
-
 Nginx should redirect the frontend to `localhost` and the backend to `localhost/api`.
-If it only works by specifying the port, you can try to open the page in a private browser mode.
+If it doesn't work, you can try to open the page in a private browser mode.
+
+Make sure that 4200, 3000 a,d 5432 ports are available on your machine.
 
 ## Features
 
