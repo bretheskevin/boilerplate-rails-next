@@ -43,6 +43,10 @@ If it doesn't work, you can try to open the page in a private browser mode.
 
 Make sure that 4200, 3000 and 5432 ports are available on your machine.
 
+## Todo
+
+- [ ] Specify the ports used by the project from the environment file
+
 ## Features
 
 **Backend**
