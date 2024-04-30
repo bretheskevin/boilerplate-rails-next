@@ -2,14 +2,14 @@
 
 ## Prerequisites
 
-- bash (The setup script use the .bashrc for aliases)
+- bash (The setup script use .bashrc for aliases)
 - [Docker](https://docs.docker.com/engine/install/)
 - [Docker Compose](https://docs.docker.com/compose/install/linux/)
   - /!\ It won't work with the old version that uses `docker-compose`, you need to install the latest one that use `docker compose`
 
 ## Get started
 
-Rename the `.env.example` file to `.env` and fill it with you own values
+Rename the `.env.example` file to `.env` and fill it with your own values
 
 ## Set up the project
 
@@ -34,17 +34,18 @@ Execute `kb` to see the available commands
 - `kb console` : Open a bash console in the backend container
 - `kb test` : Run the tests
 - `kb rubocop` : Run rubocop
+- `kb logs` : Show the docker containers logs
 
 ## Ports
 
 Nginx should redirect the frontend to `localhost` and the backend to `localhost/api`.
 If it doesn't work, you can try to open the page in a private browser mode.
 
-Make sure that 4200, 3000 a,d 5432 ports are available on your machine.
+Make sure that 4200, 3000 and 5432 ports are available on your machine.
 
 ## Features
 
-**BACKEND**
+**Backend**
 
 - [x] Rubocop (with rspec and factory-bot plugins)
 - [x] Rspec
