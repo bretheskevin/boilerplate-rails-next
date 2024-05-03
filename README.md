@@ -1,11 +1,14 @@
 # Template Next.js / Ruby on Rails
 
+Your application will be served to [http://localhost/](http://localhost/)
+
 ## Prerequisites
 
 - bash (The setup script use .bashrc for aliases)
 - [Docker](https://docs.docker.com/engine/install/)
 - [Docker Compose](https://docs.docker.com/compose/install/linux/)
-  - /!\ It won't work with the old version that uses `docker-compose`, you need to install the latest one that use `docker compose`
+    - /!\ It won't work with the old version that uses `docker-compose`, you need to install the latest one that
+      use `docker compose`
 
 ## Get started
 
@@ -38,14 +41,8 @@ Execute `kb` to see the available commands
 
 ## Ports
 
-Nginx should redirect the frontend to `localhost` and the backend to `localhost/api`.
-If it doesn't work, you can try to open the page in a private browser mode.
-
-Make sure that 4200, 3000 and 5432 ports are available on your machine.
-
-## Todo
-
-- [ ] Specify the ports used by the project from the environment file
+If you have any conflicts with the porte 3000, 4200 or 5432, you can change them in the `.env` file.
+It will change the ports served by the docker container (it's normal that the ports don't change in the logs)
 
 ## Features
 
