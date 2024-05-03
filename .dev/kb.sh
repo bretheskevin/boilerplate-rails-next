@@ -1,17 +1,18 @@
 #!/bin/bash
 
-project_root=$(grep -oP "(?<=alias kb_path=')[^']+" ~/.bashrc)
+PROJECT_ROOT=$(grep -oP "(?<=alias kb_path=')[^']+" ~/.bashrc)
 
-if [ -d "$project_root" ]; then
-  cd "$project_root" || { echo "Failed to change directory to $project_root"; return 1; }
+if [ -d "$PROJECT_ROOT" ]; then
+  cd "$PROJECT_ROOT" || { echo "Failed to change directory to $PROJECT_ROOT"; return 1; }
 fi
+
+PROJECT_NAME=$(grep -oP '(?<=PROJECT_NAME=").*(?=")' .env)
 
 build() {
   docker compose build
 }
 
 start() {
-  PROJECT_NAME=$(grep -oP '(?<=PROJECT_NAME=").*(?=")' .env)
 
   rm -f backend/tmp/pids/server.pid
   docker compose down
@@ -19,28 +20,23 @@ start() {
 }
 
 console() {
-  PROJECT_NAME=$(grep -oP '(?<=PROJECT_NAME=").*(?=")' .env)
   docker exec -it $PROJECT_NAME-backend bash
 }
 
 rspec() {
-  PROJECT_NAME=$(grep -oP '(?<=PROJECT_NAME=").*(?=")' .env)
   docker exec -t $PROJECT_NAME-backend bash -c "RAILS_ENV=test rspec --color $1"
 }
 
 rubocop() {
-  PROJECT_NAME=$(grep -oP '(?<=PROJECT_NAME=").*(?=")' .env)
   docker exec -t $PROJECT_NAME-backend bash -c "rubocop -A"
 }
 
 logs() {
   case "$1" in
     b|back|backend)
-      PROJECT_NAME=$(grep -oP '(?<=PROJECT_NAME=").*(?=")' .env)
       docker logs -f --tail 30 $PROJECT_NAME-backend
       ;;
     f|front|frontend)
-      PROJECT_NAME=$(grep -oP '(?<=PROJECT_NAME=").*(?=")' .env)
       docker logs -f --tail 30 $PROJECT_NAME-frontend
       ;;
     *)
