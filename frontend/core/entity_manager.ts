@@ -9,12 +9,12 @@ export interface ListParams {
 export class EntityManager<T extends BaseModel, U extends IBaseModel> {
   public _modelClass: typeof BaseModel;
   public _modelInstance: T;
-  private _apiUrl: string = "";
+  private readonly _apiUrl: string = "";
 
   constructor(modelClass: typeof BaseModel) {
-    this._setApiUrl(modelClass);
     this._modelClass = modelClass;
     this._modelInstance = new modelClass() as T;
+    this._apiUrl = this._modelInstance.apiUrl;
   }
 
   async list(params: ListParams = {}): Promise<ApiResponse<ApiModelListResponse<T>>> {
@@ -82,11 +82,6 @@ export class EntityManager<T extends BaseModel, U extends IBaseModel> {
       ok: response.ok,
       data: response.ok ? null : (response.data as ApiError),
     };
-  }
-
-  private _setApiUrl(modelClass: typeof BaseModel): void {
-    const model = new modelClass();
-    this._apiUrl = model.apiUrl;
   }
 
   private _modelFromJSON(json: U): T {
