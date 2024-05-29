@@ -1,4 +1,6 @@
 #!/bin/bash
+
+USERNAME=$(logname)
 if [ "`id -u`" -ne 0 ]; then
  echo "Switching from `id -un` to root"
  exec sudo "$0"
@@ -10,18 +12,18 @@ bash_completion() {
 
   commands="build start console test rubocop logs"
 
-   sed -i "/^alias kb_path=/d" ~/.bashrc
-   echo "alias kb_path='$(pwd)'" >> ~/.bashrc
+   sed -i "/^alias kb_path=/d" /home/$USERNAME/.bashrc
+   echo "alias kb_path='$(pwd)'" >> /home/$USERNAME/.bashrc
 
-   sed -i "/^alias kb=/d" ~/.bashrc
-   echo "alias kb='$(pwd)/.dev/kb.sh'" >> ~/.bashrc
+   sed -i "/^alias kb=/d" /home/$USERNAME/.bashrc
+   echo "alias kb='$(pwd)/.dev/kb.sh'" >> /home/$USERNAME/.bashrc
 
-  if ! grep -q "source /etc/profile.d/bash_completion.sh" ~/.bashrc; then
-    echo "source /etc/profile.d/bash_completion.sh" >> ~/.bashrc
+  if ! grep -q "source /etc/profile.d/bash_completion.sh" /home/$USERNAME/.bashrc; then
+    echo "source /etc/profile.d/bash_completion.sh" >> /home/$USERNAME/.bashrc
   fi
 
-  if ! grep -q "complete -W '${commands}' kb" ~/.bashrc; then
-    echo "complete -W '${commands}' kb" >> ~/.bashrc
+  if ! grep -q "complete -W '${commands}' kb" /home/$USERNAME/.bashrc; then
+    echo "complete -W '${commands}' kb" >> /home/$USERNAME/.bashrc
   fi
 }
 
