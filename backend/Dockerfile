@@ -6,6 +6,7 @@ RUN apt-get update -qq && apt-get install -y \
     nodejs
 
 COPY Gemfile* ./
+
 RUN gem install bundler && bundle install --jobs 4 --retry 3
 
 COPY . .
