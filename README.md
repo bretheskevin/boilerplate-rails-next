@@ -70,3 +70,7 @@ It will change the ports served by the docker container (it's normal that the po
 - [x] EntityManager (automatically fetch data from the API)
 - [x] Model
 - [x] Example page with some entity manager actions
+
+## TODO
+
+- [ ] Backend specs coverage 100%
