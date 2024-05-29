@@ -1,5 +1,12 @@
+#!/bin/bash
+if [ "`id -u`" -ne 0 ]; then
+ echo "Switching from `id -un` to root"
+ exec sudo "$0"
+ exit 99
+fi
+
 bash_completion() {
-  sudo apt install bash-completion
+  apt install bash-completion
 
   commands="build start console test rubocop logs"
 
