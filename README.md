@@ -8,7 +8,7 @@ Your application will be served to [http://localhost/](http://localhost/)
 - [Docker](https://docs.docker.com/engine/install/)
 - [Docker Compose](https://docs.docker.com/compose/install/linux/)
     - /!\ It won't work with the old version that uses `docker-compose`, you need to install the latest one that
-      use `docker compose`
+      use `docker compose` or add an alias in your `.bash_aliases` file.
 
 ## Get started
 
@@ -55,6 +55,7 @@ It will change the ports served by the docker container (it's normal that the po
 - [x] Serializer
 - [x] Authentication with devise
 - [x] Pundit gem for authorization (roles)
+- [ ] Scope to get deleted and inactivated models
 
 **Frontend**
 
