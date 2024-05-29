@@ -62,6 +62,3 @@ gem "active_model_serializers", "~> 0.10.12"
 gem "pundit", "~> 2.3"
 
 gem "kaminari"
-
-gem "nokogiri", ">= 1.16.5"
-gem "rexml", ">= 3.2.7"
