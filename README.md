@@ -70,6 +70,7 @@ It will change the ports served by the docker container (it's normal that the po
 - [x] EntityManager (automatically fetch data from the API)
 - [x] Model
 - [x] Example page with some entity manager actions
+- [ ] Type model.ts toJson()
 
 ## TODO
 
