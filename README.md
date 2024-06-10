@@ -9,6 +9,7 @@ Your application will be served to [http://localhost/](http://localhost/)
 - [Docker Compose](https://docs.docker.com/compose/install/linux/)
     - /!\ It won't work with the old version that uses `docker-compose`, you need to install the latest one that
       use `docker compose` or add an alias in your `.bash_aliases` file.
+- [Yarn](https://classic.yarnpkg.com/en/docs/install)
 
 ## Get started
 
@@ -22,11 +23,18 @@ The following script will :
 - Add an alias named `kb` to the `.dev/kb.sh` file
 - Add auto-completion for the `kb` alias
 
-```bashg
+```bash
 ./setup.sh
 ```
 
-**Make sure to restart your terminal or source the `.bashrc` file**
+Then, go to the frontend folder, and install the depedencies
+
+```bash
+cd frontend
+yarn install
+```
+
+# Make sure to restart your terminal or source the `.bashrc` file
 
 Execute `kb` to see the available commands
 
@@ -75,4 +83,3 @@ It will change the ports served by the docker container (it's normal that the po
 ## TODO
 
 - [ ] Backend specs coverage 100%
-- [ ] Fix that you have to do yarn install mannualy to start the frontend
