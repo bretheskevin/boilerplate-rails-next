@@ -1,18 +1,14 @@
 export interface IBaseModel {
-  id: number;
-  created_at: string;
-  updated_at: string;
+  id?: number;
+  created_at?: string;
+  updated_at?: string;
 }
 
 export class BaseModel {
   apiUrl: string = "";
   modelParam: string = "";
 
-  attributes: IBaseModel = {
-    id: 0,
-    created_at: "",
-    updated_at: "",
-  };
+  attributes: IBaseModel = {};
 
   fromJSON(json: JSONObject): void {
     for (const key in this.attributes) {
@@ -28,6 +24,6 @@ export class BaseModel {
   }
 
   toString(): string {
-    return this.attributes.id.toString();
+    return this.attributes.id?.toString() || "";
   }
 }
