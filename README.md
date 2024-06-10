@@ -75,3 +75,4 @@ It will change the ports served by the docker container (it's normal that the po
 ## TODO
 
 - [ ] Backend specs coverage 100%
+- [ ] Fix that you have to do yarn install mannualy to start the frontend
