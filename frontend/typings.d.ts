@@ -1,16 +1,16 @@
-declare type JSONObject = { [key: string]: any };
+type JSONObject = { [key: string]: any };
 
-declare type ApiError = {
+type ApiError = {
   error: string;
   error_description: string[];
 };
 
-declare type ApiResponse<T> = {
+type ApiResponse<T> = {
   ok: boolean;
   data: T | ApiError;
 };
 
-declare type ApiModelListResponse<T> = {
+type ApiModelListResponse<T> = {
   models: T[];
   current_page: number;
   total_pages: number;
