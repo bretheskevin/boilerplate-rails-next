@@ -43,7 +43,6 @@ describe "Dummies" do
 
     it "returns an error response" do
       post "/dummies", params: { dummy: { description: "Hello" } }
-      pp response.status
       expect(response).to have_http_status(:unprocessable_content)
       expect(json).to have_key("error")
     end
