@@ -19,11 +19,6 @@ module CrudConcern
   def show
     authorize @object
 
-    if @object.nil?
-      render json: { error: "#{base_class.model_name.human} not found", error_description: [] }, status: :not_found
-      return
-    end
-
     render json: @object
   end
 

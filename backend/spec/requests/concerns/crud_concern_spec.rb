@@ -24,10 +24,12 @@ describe "Dummies" do
       expect(json["name"]).to eq(dummy.name)
     end
 
-    it "returns an error response" do
-      get "/dummies/0"
-      expect(response).to have_http_status(:not_found)
-      expect(json).to have_key("error")
+    context "when the model is not found" do
+      it "returns a 404 error" do
+        get "/dummies/0"
+        expect(response).to have_http_status(:not_found)
+        expect(json).to have_key("error")
+      end
     end
   end
 

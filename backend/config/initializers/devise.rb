@@ -27,7 +27,7 @@ Devise.setup do |config|
 
   config.sign_out_via = :delete
 
-  config.responder.error_status = :unprocessable_entity
+  config.responder.error_status = :unprocessable_content
   config.responder.redirect_status = :see_other
 end
 
