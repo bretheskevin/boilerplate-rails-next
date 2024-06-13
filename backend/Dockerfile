@@ -1,11 +1,18 @@
-FROM ruby:3.2.2
+FROM ruby:3.3.3-alpine
+
+RUN apk update && \
+    apk add --no-cache \
+        build-base \
+        libc-dev \
+        nodejs \
+        postgresql-dev \
+        postgresql-libs
+
+RUN bundle config --global frozen 1
 
 WORKDIR /backend
 
-RUN apt-get update -qq && apt-get install -y \
-    nodejs
-
-COPY Gemfile* ./
+COPY Gemfile Gemfile.lock ./
 
 RUN gem install bundler && bundle install --jobs 4 --retry 3
 

@@ -20,15 +20,15 @@ start() {
 }
 
 console() {
-  docker exec -it $PROJECT_NAME-backend bash
+  docker exec -it $PROJECT_NAME-backend sh
 }
 
 rspec() {
-  docker exec -t $PROJECT_NAME-backend bash -c "RAILS_ENV=test rspec --color $1"
+  docker exec -t $PROJECT_NAME-backend sh -c "RAILS_ENV=test rspec --color $1"
 }
 
 rubocop() {
-  docker exec -t $PROJECT_NAME-backend bash -c "rubocop -A"
+  docker exec -t $PROJECT_NAME-backend sh -c "rubocop -A"
 }
 
 logs() {
