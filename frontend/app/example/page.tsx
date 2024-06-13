@@ -1,11 +1,11 @@
 "use client";
 
-import {AuthService} from "@services/auth.service";
-import {EntityManager} from "@/core/entity_manager";
-import {Dummy, IDummy} from "@/app/example/dummy";
-import {useRef} from "react";
+import { AuthService } from "@services/auth.service";
+import { EntityManager } from "@/core/entity_manager";
+import { Dummy, IDummy } from "@/app/example/dummy";
+import { useRef } from "react";
+import { Button } from "@/components/ui/button";
 
-const buttonStyles = "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded";
 const btnContainerStyles = "flex items-center justify-center gap-4";
 
 export default function Example() {
@@ -64,7 +64,7 @@ export default function Example() {
 
   const create = async () => {
     const em: EntityManager<Dummy, IDummy> = new EntityManager(Dummy);
-    const response = await em.create({name: "Dummy", description: "Description"});
+    const response = await em.create({ name: "Dummy", description: "Description" });
     console.log(response);
   };
 
@@ -72,7 +72,7 @@ export default function Example() {
     counter.current++;
 
     const em: EntityManager<Dummy, IDummy> = new EntityManager(Dummy);
-    const response = await em.update(1, {name: `Dummy Change#${counter.current}`, description: "Description"});
+    const response = await em.update(1, { name: `Dummy Change#${counter.current}`, description: "Description" });
     console.log(response.data);
     console.log(response.data.toString());
   };
@@ -87,54 +87,30 @@ export default function Example() {
   return (
     <main className="min-h-screen p-24 flex flex-col justify-center gap-4">
       <div className={btnContainerStyles}>
-        <button className={buttonStyles} onClick={register}>
-          REGISTER
-        </button>
-        <button className={buttonStyles} onClick={login}>
-          LOGIN
-        </button>
-        <button className={buttonStyles} onClick={logout}>
-          LOGOUT
-        </button>
-        <button className={buttonStyles} onClick={logLocalStorage}>
-          LOG LOCAL STORAGE
-        </button>
+        <Button onClick={register}>REGISTER</Button>
+        <Button onClick={login}>LOGIN</Button>
+        <Button onClick={logout}>LOGOUT</Button>
+        <Button onClick={logLocalStorage}>LOG LOCAL STORAGE</Button>
       </div>
 
       <div className={btnContainerStyles}>
-        <button className={buttonStyles} onClick={me}>
-          ME
-        </button>
+        <Button onClick={me}>ME</Button>
 
-        <button className={buttonStyles} onClick={list}>
-          LIST
-        </button>
+        <Button onClick={list}>LIST</Button>
 
-        <button className={buttonStyles} onClick={list2}>
-          LIST 2
-        </button>
+        <Button onClick={list2}>LIST 2</Button>
 
-        <button className={buttonStyles} onClick={find}>
-          FIND
-        </button>
+        <Button onClick={find}>FIND</Button>
 
-        <button className={buttonStyles} onClick={findNotFound}>
-          FIND NOT FOUND
-        </button>
+        <Button onClick={findNotFound}>FIND NOT FOUND</Button>
 
-        <button className={buttonStyles} onClick={create}>
-          CREATE
-        </button>
+        <Button onClick={create}>CREATE</Button>
       </div>
 
       <div className={btnContainerStyles}>
-        <button className={buttonStyles} onClick={patch}>
-          PATCH
-        </button>
+        <Button onClick={patch}>PATCH</Button>
 
-        <button className={buttonStyles} onClick={deleteDummy}>
-          DELETE
-        </button>
+        <Button onClick={deleteDummy}>DELETE</Button>
       </div>
     </main>
   );

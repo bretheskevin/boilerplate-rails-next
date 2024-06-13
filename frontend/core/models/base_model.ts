@@ -8,7 +8,11 @@ export class BaseModel {
   apiUrl: string = "";
   modelParam: string = "";
 
-  attributes: IBaseModel = {};
+  attributes: IBaseModel = {
+    id: undefined,
+    created_at: undefined,
+    updated_at: undefined,
+  };
 
   fromJSON(json: JSONObject): void {
     for (const key in this.attributes) {

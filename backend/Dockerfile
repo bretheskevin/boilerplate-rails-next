@@ -6,7 +6,8 @@ RUN apk update && \
         libc-dev \
         nodejs \
         postgresql-dev \
-        postgresql-libs
+        postgresql-libs \
+        tzdata
 
 RUN bundle config --global frozen 1
 
