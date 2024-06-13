@@ -21,6 +21,7 @@ services:
       - ${FRONTEND_PORT}:4200
     volumes:
       - ./frontend:/frontend
+      - /frontend/node_modules
     depends_on:
       - backend
 

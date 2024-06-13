@@ -1,5 +1,5 @@
-import { ApiService } from "@/core/services/api.service";
-import { IUser, UserModel } from "@/core/models/user.model";
+import {ApiService} from "@/core/services/api.service";
+import {IUser, User} from "@/core/models/user";
 
 interface DeviseSuccessResponse {
   expires_in: number;
@@ -11,7 +11,7 @@ interface DeviseSuccessResponse {
 
 export class AuthService {
   static async register(email: string, password: string): Promise<ApiResponse<DeviseSuccessResponse>> {
-    const response = await ApiService.post<DeviseSuccessResponse>("users/tokens/sign_up", { email, password });
+    const response = await ApiService.post<DeviseSuccessResponse>("users/tokens/sign_up", {email, password});
 
     this._storeTokens(response);
 
@@ -19,22 +19,22 @@ export class AuthService {
   }
 
   static async login(email: string, password: string): Promise<ApiResponse<DeviseSuccessResponse>> {
-    const response = await ApiService.post<DeviseSuccessResponse>("users/tokens/sign_in", { email, password });
+    const response = await ApiService.post<DeviseSuccessResponse>("users/tokens/sign_in", {email, password});
 
     this._storeTokens(response);
     return response;
   }
 
-  static async me(): Promise<ApiResponse<UserModel>> {
+  static async me(): Promise<ApiResponse<User>> {
     const response: ApiResponse<IUser> = await ApiService.get<IUser>("users/tokens/info");
 
     if (response.ok) {
-      const user = new UserModel();
+      const user = new User();
       user.fromJSON(response.data as IUser);
-      return { ok: true, data: user };
+      return {ok: true, data: user};
     }
 
-    return { ok: false, data: response.data as ApiError };
+    return {ok: false, data: response.data as ApiError};
   }
 
   static logout(): void {
