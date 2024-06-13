@@ -79,7 +79,3 @@ It will change the ports served by the docker container (it's normal that the po
 - [x] Model
 - [x] Example page with some entity manager actions
 - [ ] Add shadcn to the project
-
-## TODO
-
-- [ ] Backend specs coverage 100%
