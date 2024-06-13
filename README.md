@@ -34,6 +34,9 @@ cd frontend
 yarn install
 ```
 
+The app will be accessible at [http://localhost/](http://localhost/), don't specify the port or you will get a CORS
+error during API calls.
+
 # Make sure to restart your terminal or source the `.bashrc` file
 
 Execute `kb` to see the available commands
