@@ -81,4 +81,4 @@ It will change the ports served by the docker container (it's normal that the po
 - [x] EntityManager (automatically fetch data from the API)
 - [x] Model
 - [x] Example page with some entity manager actions
-- [ ] Add shadcn to the project
+- [x] [Shadcn](https://ui.shadcn.com/) library for the UI
