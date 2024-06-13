@@ -1,5 +1,8 @@
 require "rails_helper"
 
+class DefaultsController < ApplicationController
+end
+
 describe "Dummies" do
   let(:dummy) { create(:dummy) }
   let(:dummy_2) { create(:dummy, name: "Dummy 2") }
@@ -63,6 +66,14 @@ describe "Dummies" do
       expect(response).to have_http_status(:not_found)
       expect(json).to have_key("error")
     end
+
+    context "when wrong param name" do
+      it "returns unprocessable content" do
+        patch "/dummies/#{dummy.id}", params: { wrong_param: { name: "New title" } }
+        expect(response).to have_http_status(:unprocessable_content)
+        expect(json).to have_key("error")
+      end
+    end
   end
 
   describe "DELETE #destroy" do
@@ -75,6 +86,14 @@ describe "Dummies" do
       delete "/dummies/0"
       expect(response).to have_http_status(:not_found)
       expect(json).to have_key("error")
+    end
+  end
+
+  describe "object_class" do
+    context "when is not implemented" do
+      it "raises an error" do
+        expect { DefaultsController.new.object_class }.to raise_error(NotImplementedError)
+      end
     end
   end
 end

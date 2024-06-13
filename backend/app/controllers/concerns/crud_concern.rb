@@ -89,7 +89,7 @@ module CrudConcern
   end
 
   def render_error_response
-    render json: { error: "Params are not valid", error_description: @object.errors.full_messages }, status: :unprocessable_entity
+    render json: { error: "Params are not valid", error_description: @object.errors.full_messages }, status: :unprocessable_content
   end
 
   def total_objects
@@ -108,7 +108,7 @@ module CrudConcern
 
     return if params[model_param].present?
 
-    render json: { error: I18n.t("errors.messages.missing_params"), error_description: [model_param] }, status: :unprocessable_entity
+    render json: { error: I18n.t("errors.messages.missing_params"), error_description: [model_param] }, status: :unprocessable_content
     false
   end
 

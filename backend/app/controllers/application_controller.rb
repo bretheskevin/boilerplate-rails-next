@@ -5,10 +5,6 @@ class ApplicationController < ActionController::API
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
-  def not_found
-    render json: { error: "Not Found", error_description: [] }, status: :not_found
-  end
-
   def user_not_authorized(_exception)
     render json: { error: "Unauthorized", error_description: [] }, status: :unauthorized
   end

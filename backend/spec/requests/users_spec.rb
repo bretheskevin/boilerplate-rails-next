@@ -65,6 +65,14 @@ describe "Users" do
         expect(json).to have_key("error")
       end
     end
+
+    context "when user doesn't exist" do
+      it "returns a 404 response" do
+        get "/users/0", headers: @admin_header
+        expect(response).to have_http_status(:not_found)
+        expect(json).to have_key("error")
+      end
+    end
   end
 
   describe "POST #create" do
@@ -95,6 +103,41 @@ describe "Users" do
         patch "/users/#{@admin.id}", params: params, headers: @user_header
         expect(response).to have_http_status(:unauthorized)
         expect(json).to have_key("error")
+      end
+    end
+  end
+
+  describe "DELETE #destroy" do
+    context "when user is an admin" do
+      it "deletes the account" do
+        delete "/users/#{@user.id}", headers: @admin_header
+        expect(response).to have_http_status(:no_content)
+      end
+
+      it "deletes his own account" do
+        delete "/users/#{@admin.id}", headers: @admin_header
+        expect(response).to have_http_status(:no_content)
+      end
+
+      it "can't delete others admin" do
+        admin = create(:admin, email: "a@a.fr")
+
+        delete "/users/#{admin.id}", headers: @admin_header
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
+
+    context "when user is not an admin" do
+      it "can't delete other account" do
+        user = create(:user, email: "a@a.fr")
+
+        delete "/users/#{user.id}", headers: @user_header
+        expect(response).to have_http_status(:unauthorized)
+      end
+
+      it "can delete his own account" do
+        delete "/users/#{@user.id}", headers: @user_header
+        expect(response).to have_http_status(:no_content)
       end
     end
   end

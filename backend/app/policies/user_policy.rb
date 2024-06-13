@@ -16,8 +16,9 @@ class UserPolicy < ApplicationPolicy
   end
 
   def destroy?
-    return true if admin?
+    return true if @user.id == @record.id
+    return false if @record.role == User.roles[:admin]
 
-    @user.id == @record.id
+    admin?
   end
 end
