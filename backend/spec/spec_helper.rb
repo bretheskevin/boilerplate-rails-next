@@ -1,5 +1,8 @@
 require "simplecov"
-SimpleCov.start
+SimpleCov.start do
+  add_filter "spec/rails_helper.rb"
+  add_filter "spec/spec_helper.rb"
+end
 
 ENV["RAILS_ENV"] ||= "example"
 require File.expand_path("../config/environment", __dir__)

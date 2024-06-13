@@ -7,6 +7,7 @@ if [ -d "$PROJECT_ROOT" ]; then
 fi
 
 PROJECT_NAME=$(grep -oP '(?<=PROJECT_NAME=").*(?=")' .env)
+OPTIONS=$(echo "$@" | grep -oP -- '-\w+')
 
 build() {
   docker compose build
@@ -24,6 +25,14 @@ console() {
 }
 
 rspec() {
+  if [[ $OPTIONS == *"-d"* ]]; then
+    docker exec -t $PROJECT_NAME-backend sh -c "RAILS_ENV=test rails db:drop db:create db:migrate"
+  fi
+
+  if [[ $1 == -* ]]; then
+    shift
+  fi
+
   docker exec -t $PROJECT_NAME-backend sh -c "RAILS_ENV=test rspec --color $1"
 }
 
@@ -62,6 +71,8 @@ help() {
     echo -e "|   ${BLUE}c${RESET}|${BLUE}console:${RESET} Enter the backend container's console"
     echo "|----------------------------------------------------------"
     echo -e "|   ${BLUE}t${RESET}|${BLUE}test:${RESET} Run RSpec tests"
+    echo "|           Options:"
+    echo "|                - -d => Reset the test database and run the migrations"
     echo "|----------------------------------------------------------"
     echo -e "|   ${BLUE}r${RESET}|${BLUE}rubocop:${RESET} Run Rubocop"
     echo "|----------------------------------------------------------"
