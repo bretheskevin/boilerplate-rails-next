@@ -69,8 +69,11 @@ module CrudConcern
   end
 
   def set_object
-    @object = object_class.find_by(id: params[:id])
-    @object = object_class.find_by(slug: params[:slug]) if use_slug?
+    @object = object_class
+    @object = object_class.with_deleted if object_class.respond_to?(:with_deleted)
+
+    @object = @object.find_by(id: params[:id])
+    @object = @object.find_by(slug: params[:slug]) if use_slug?
 
     return unless @object.nil?
 
@@ -97,7 +100,11 @@ module CrudConcern
   end
 
   def objects_query
-    object_class.order(base_class.default_sort)
+    object = object_class
+
+    object = ObjectQueryService.apply(object, params)
+
+    object.order(base_class.default_sort)
   end
 
   def check_required_param

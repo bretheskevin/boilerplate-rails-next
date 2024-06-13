@@ -96,4 +96,45 @@ describe "Dummies" do
       end
     end
   end
+
+  describe "soft_delete query params" do
+    let(:dummy) { create(:dummy) }
+    let(:dummy_2) { create(:dummy) }
+
+    before do
+      dummy
+      dummy_2
+      dummy.destroy
+    end
+
+    context "when no params" do
+      it "returns 0 dummies" do
+        get "/dummies"
+        expect(json["models"].count).to eq(1)
+        expect(json["models"].first["id"]).to eq(dummy_2.id)
+      end
+    end
+
+    context "when with_deleted" do
+      it "returns 2 dummies" do
+        get "/dummies?with_deleted=1"
+        expect(json["models"].count).to eq(2)
+      end
+    end
+
+    context "when only_deleted" do
+      it "returns 1 dummy" do
+        get "/dummies?only_deleted=1"
+        expect(json["models"].count).to eq(1)
+        expect(json["models"].first["id"]).to eq(dummy.id)
+      end
+    end
+
+    context "when try to find a deleted object" do
+      it "returns the dummy" do
+        get "/dummies/#{dummy.id}"
+        expect(response).to be_successful
+      end
+    end
+  end
 end

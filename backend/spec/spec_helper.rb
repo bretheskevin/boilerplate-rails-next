@@ -33,4 +33,6 @@ RSpec.configure do |config|
   config.shared_context_metadata_behavior = :apply_to_host_groups
 
   config.include Devise::Test::IntegrationHelpers, type: :request
+
+  config.example_status_persistence_file_path = "tmp/spec-only-failures.txt"
 end
