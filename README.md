@@ -63,7 +63,7 @@ It will change the ports served by the docker container (it's normal that the po
 - [x] Serializer
 - [x] Authentication with devise
 - [x] Pundit gem for authorization (roles)
-- [ ] Scope to get deleted and inactivated models
+- [x] Scope to get deleted models
 
 **Frontend**
 
