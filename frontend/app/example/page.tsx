@@ -6,8 +6,6 @@ import { Dummy, IDummy } from "@/app/example/dummy";
 import { useRef } from "react";
 import { Button } from "@/components/ui/button";
 
-const btnContainerStyles = "flex items-center justify-center gap-4";
-
 export default function Example() {
   const counter = useRef<number>(1);
 
@@ -85,15 +83,15 @@ export default function Example() {
   };
 
   return (
-    <main className="min-h-screen p-24 flex flex-col justify-center gap-4">
-      <div className={btnContainerStyles}>
+    <main className="min-h-screen flex flex-col items-center justify-center gap-4">
+      <div className={"flex gap-2"}>
         <Button onClick={register}>REGISTER</Button>
         <Button onClick={login}>LOGIN</Button>
         <Button onClick={logout}>LOGOUT</Button>
         <Button onClick={logLocalStorage}>LOG LOCAL STORAGE</Button>
       </div>
 
-      <div className={btnContainerStyles}>
+      <div className={"flex gap-2"}>
         <Button onClick={me}>ME</Button>
 
         <Button onClick={list}>LIST</Button>
@@ -107,7 +105,7 @@ export default function Example() {
         <Button onClick={create}>CREATE</Button>
       </div>
 
-      <div className={btnContainerStyles}>
+      <div className={"flex gap-2"}>
         <Button onClick={patch}>PATCH</Button>
 
         <Button onClick={deleteDummy}>DELETE</Button>

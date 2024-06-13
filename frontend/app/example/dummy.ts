@@ -1,4 +1,4 @@
-import {BaseModel, IBaseModel} from "@/core/models/base_model";
+import { BaseModel, IBaseModel } from "@/core/models/base.model";
 
 export interface IDummy extends IBaseModel {
   name?: string;
@@ -12,7 +12,7 @@ export class Dummy extends BaseModel {
   attributes: IDummy = {
     ...this.attributes,
     name: undefined,
-    description: undefined
+    description: undefined,
   };
 
   toString(): string {

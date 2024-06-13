@@ -1,4 +1,4 @@
-import { BaseModel, IBaseModel } from "@/core/models/base_model";
+import { BaseModel, IBaseModel } from "@/core/models/base.model";
 import { ApiService } from "@services/api.service";
 
 export interface ListParams {

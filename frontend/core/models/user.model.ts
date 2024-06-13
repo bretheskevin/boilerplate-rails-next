@@ -1,4 +1,4 @@
-import {BaseModel, IBaseModel} from "@/core/models/base_model";
+import { BaseModel, IBaseModel } from "@/core/models/base.model";
 
 export enum UserRole {
   ADMIN = "admin",
@@ -17,7 +17,7 @@ export class User extends BaseModel {
   attributes: IUser = {
     ...this.attributes,
     email: undefined,
-    role: undefined
+    role: undefined,
   };
 
   isAdmin(): boolean {
