@@ -113,3 +113,23 @@ export default function Example() {
     </main>
   );
 }
+
+// import { Dummy, IDummy } from "@/app/example/dummy";
+// import { EntityManager } from "@/core/entity_manager";
+//
+// export default async function Example() {
+//   const em: EntityManager<Dummy, IDummy> = new EntityManager(Dummy);
+//   const response = await em.list();
+//   const data = response.data as ApiModelListResponse<Dummy>;
+//
+//   return (
+//     <main>
+//       <h1>Hello world</h1>
+//       <ul>
+//         {data.models.map((item) => (
+//           <li key={item.attributes.id}>{item.attributes.name}</li>
+//         ))}
+//       </ul>
+//     </main>
+//   );
+// }

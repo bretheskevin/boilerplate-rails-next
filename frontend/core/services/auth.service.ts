@@ -1,5 +1,6 @@
 import { ApiService } from "@/core/services/api.service";
 import { IUser, User } from "@/core/models/user.model";
+import { clearTokens, setAccessToken, setRefreshToken } from "@/stores/auth.store";
 
 interface DeviseSuccessResponse {
   expires_in: number;
@@ -38,15 +39,14 @@ export class AuthService {
   }
 
   static logout(): void {
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("refreshToken");
+    clearTokens();
   }
 
   private static _storeTokens(response: ApiResponse<DeviseSuccessResponse>): void {
     if (!response.ok) return;
 
     const data = response.data as DeviseSuccessResponse;
-    localStorage.setItem("accessToken", data.token);
-    localStorage.setItem("refreshToken", data.refresh_token);
+    setAccessToken(data.token);
+    setRefreshToken(data.refresh_token);
   }
 }

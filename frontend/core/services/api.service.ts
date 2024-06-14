@@ -1,5 +1,7 @@
+import { useAuthStore } from "@/stores/auth.store";
+
 export class ApiService {
-  private static _baseUrl: string = "/api/";
+  private static _baseUrl: string = "http://127.0.0.1/api/";
 
   static async get<T>(url: string, params: JSONObject = {}): Promise<ApiResponse<T>> {
     const response = await fetch(this._buildUrl(url, params), {
@@ -39,7 +41,7 @@ export class ApiService {
   }
 
   private static _buildUrl(path: string, params: JSONObject = {}): string {
-    const url: URL = new URL(this._baseUrl + path, window.location.origin);
+    const url: URL = new URL(path, this._baseUrl);
 
     for (const [key, value] of Object.entries(params)) {
       const snakeKey = key.replace(/([A-Z])/g, "_$1").toLowerCase();
@@ -52,7 +54,7 @@ export class ApiService {
   private static _buildHeaders(): { [key: string]: string } {
     return {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      Authorization: `Bearer ${useAuthStore.getState().accessToken}`,
     };
   }
 

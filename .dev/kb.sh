@@ -48,6 +48,9 @@ logs() {
     f|front|frontend)
       docker logs -f --tail 30 $PROJECT_NAME-frontend
       ;;
+    n|nginx)
+      docker logs -f --tail 30 $PROJECT_NAME-nginx
+      ;;
     *)
       echo "Invalid service name. Use 'backend' or 'frontend'"
       echo "- kb logs backend"

@@ -82,3 +82,8 @@ It will change the ports served by the docker container (it's normal that the po
 - [x] Model
 - [x] Example page with some entity manager actions
 - [x] [Shadcn](https://ui.shadcn.com/) library for the UI
+- [x] [Zod](https://zod.dev/) lib added for form validation
+
+**TODO**
+
+- [ ] Make ApiService working from server components
