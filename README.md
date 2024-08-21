@@ -8,7 +8,7 @@ Your application will be served to [http://localhost/](http://localhost/)
 - [Docker](https://docs.docker.com/engine/install/)
 - [Docker Compose](https://docs.docker.com/compose/install/linux/)
     - /!\ It won't work with the old version that uses `docker-compose`, you need to install the latest one that
-      use `docker compose` or add an alias in your `.bash_aliases` file.
+      use `docker compose`, or add an alias in your `.bash_aliases` file.
 - [Yarn](https://classic.yarnpkg.com/en/docs/install)
 
 ## Get started
@@ -27,14 +27,14 @@ The following script will :
 ./setup.sh
 ```
 
-Then, go to the frontend folder, and install the depedencies
+Then, go to the frontend folder, and install the dependencies
 
 ```bash
 cd frontend
 yarn install
 ```
 
-The app will be accessible at [http://localhost/](http://localhost/), don't specify the port or you will get a CORS
+The app will be accessible at [http://localhost/](http://localhost/), don't specify the port, or you will get a CORS
 error during API calls.
 
 # Make sure to restart your terminal or source the `.bashrc` file
