@@ -87,3 +87,4 @@ It will change the ports served by the docker container (it's normal that the po
 **TODO**
 
 - [ ] Make ApiService working from server components
+- [ ] Remove the need to do `yarn install` in the frontend folder to run the app
