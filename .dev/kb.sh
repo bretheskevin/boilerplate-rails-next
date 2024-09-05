@@ -1,13 +1,13 @@
 #!/bin/bash
 
-PROJECT_ROOT=$(grep -oP "(?<=alias kb_path=')[^']+" ~/.bashrc)
+PROJECT_ROOT=$(sed -n "s/alias kb_path='\([^']*\)'.*/\1/p" ~/.bashrc)
 
 if [ -d "$PROJECT_ROOT" ]; then
   cd "$PROJECT_ROOT" || { echo "Failed to change directory to $PROJECT_ROOT"; return 1; }
 fi
 
-PROJECT_NAME=$(grep -oP '(?<=PROJECT_NAME=").*(?=")' .env)
-OPTIONS=$(echo "$@" | grep -oP -- '-\w+')
+PROJECT_NAME=$(sed -n "s/PROJECT_NAME=\"\(.*\)\"/\1/p" .env)
+OPTIONS=$(echo "$@" | sed -n "s/\(-\w*\)//p")
 
 build() {
   docker compose build

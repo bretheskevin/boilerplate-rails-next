@@ -17,6 +17,9 @@ Rename the `.env.example` file to `.env` and fill it with your own values
 
 ## Set up the project
 
+
+### Linux
+
 The following script will :
 
 - Install the pre-commit hooks (`rubocop` and `rspec`)
@@ -26,6 +29,17 @@ The following script will :
 ```bash
 ./setup.sh
 ```
+
+### MacOS
+
+Add the permissions to the `.git` folder and execute the setup script
+
+```bash
+chmod -R 777 .git
+./setup-macos.sh
+```
+
+#
 
 Then, go to the frontend folder, and install the dependencies
 
@@ -88,3 +102,4 @@ It will change the ports served by the docker container (it's normal that the po
 
 - [ ] Make ApiService working from server components
 - [ ] Remove the need to do `yarn install` in the frontend folder to run the app
+- [ ] Migrate Rails.application.secrets to Rails.application.credentials
