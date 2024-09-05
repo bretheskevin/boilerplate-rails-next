@@ -103,3 +103,4 @@ It will change the ports served by the docker container (it's normal that the po
 - [ ] Make ApiService working from server components
 - [ ] Remove the need to do `yarn install` in the frontend folder to run the app
 - [ ] Migrate Rails.application.secrets to Rails.application.credentials
+- [ ] Automatically initialize EntityManager on model instantiation
