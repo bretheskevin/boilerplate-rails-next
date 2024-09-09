@@ -36,6 +36,10 @@ rspec() {
   docker exec -t $PROJECT_NAME-backend sh -c "RAILS_ENV=test rspec --color $1"
 }
 
+vitest() {
+  docker exec -t $PROJECT_NAME-frontend sh -c "yarn test"
+}
+
 rubocop() {
   docker exec -t $PROJECT_NAME-backend sh -c "rubocop -A"
 }
@@ -63,6 +67,7 @@ help() {
     GREEN='\033[0;32m'
     YELLOW='\033[1;33m'
     BLUE='\033[0;34m'
+    RED='\033[0;31m'
     RESET='\033[0m'
 
     echo -e "${YELLOW}Usage:${RESET} {${GREEN}build${RESET}|${GREEN}start${RESET}|${GREEN}console${RESET}|${GREEN}test${RESET}|${GREEN}rubocop${RESET}|${GREEN}logs${RESET}}"
@@ -75,7 +80,9 @@ help() {
     echo "|----------------------------------------------------------"
     echo -e "|   ${BLUE}t${RESET}|${BLUE}test:${RESET} Run RSpec tests"
     echo "|           Options:"
-    echo "|                - -d => Reset the test database and run the migrations"
+    echo -e "|                ${RED}-d${RESET} => Reset the test database and run the migrations"
+    echo "|----------------------------------------------------------"
+    echo -e "|   ${BLUE}tf${RESET}|${BLUE}test_front:${RESET} Run Vitest tests"
     echo "|----------------------------------------------------------"
     echo -e "|   ${BLUE}r${RESET}|${BLUE}rubocop:${RESET} Run Rubocop"
     echo "|----------------------------------------------------------"
@@ -106,6 +113,9 @@ case "$1" in
     ;;
   t|test)
     rspec "${@:2}"
+    ;;
+  tf|test_front)
+    vitest
     ;;
   r|rubocop)
     rubocop

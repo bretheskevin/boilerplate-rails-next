@@ -1,4 +1,4 @@
-import { Cookies } from "@/core/utils/client/cookies";
+import { Cookies } from "@utils/cookies";
 
 export class ApiService {
   static API_BASE_URL_CLIENT: string = "http://127.0.0.1/api/";

@@ -1,6 +1,6 @@
 import { ApiService } from "@/core/services/api.service";
 import { IUser, User } from "@/core/models/user.model";
-import { Cookies } from "@/core/utils/client/cookies";
+import { Cookies } from "@utils/cookies";
 
 interface DeviseSuccessResponse {
   expires_in: number;

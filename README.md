@@ -97,10 +97,10 @@ It will change the ports served by the docker container (it's normal that the po
 - [x] Example page with some entity manager actions
 - [x] [Shadcn](https://ui.shadcn.com/) library for the UI
 - [x] [Zod](https://zod.dev/) lib added for form validation
+- [x] [Vitest](https://vitest.dev/) lib added for testing
 
 **TODO**
 
-- [ ] Remove the need to do `yarn install` in the frontend folder to run the app
+- [ ] Use volumes correctly so node_modules is dockerized
 - [ ] Migrate Rails.application.secrets to Rails.application.credentials
 - [ ] Automatically initialize EntityManager on model instantiation
-- [ ] Add jest or equivalent for the frontend tests
