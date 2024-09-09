@@ -1,6 +1,9 @@
 import { Cookies } from "@/core/utils/client/cookies";
 
 export class ApiService {
+  static API_BASE_URL_CLIENT: string = "http://127.0.0.1/api/";
+  static API_BASE_URL_SERVER: string = "http://backend:3000/";
+
   private static nodeFetch: any = null;
 
   static async get<T>(url: string, params: JSONObject = {}): Promise<ApiResponse<T>> {
@@ -82,9 +85,9 @@ export class ApiService {
 
   private static _baseUrl() {
     if (typeof window !== "undefined") {
-      return "http://127.0.0.1/api/";
+      return this.API_BASE_URL_CLIENT;
     } else {
-      return "http://backend:3000/";
+      return this.API_BASE_URL_SERVER;
     }
   }
 }
