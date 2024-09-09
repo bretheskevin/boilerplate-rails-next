@@ -1,5 +1,3 @@
-# dummies controller and model class are used for writing specs
-
 class DummiesController < ApplicationController
   def object_class
     base_class

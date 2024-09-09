@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.scss";
 import { cn } from "@/lib/utils";
 import { Inter as FontSans } from "next/font/google";
+import React from "react";
 
 export const metadata: Metadata = {
   title: "Create Next App",

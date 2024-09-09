@@ -1,21 +1,21 @@
-import { useAuthStore } from "@/stores/auth.store";
+import { Cookies } from "@/core/utils/client/cookies";
 
 export class ApiService {
-  private static _baseUrl: string = "http://127.0.0.1/api/";
+  private static nodeFetch: any = null;
 
   static async get<T>(url: string, params: JSONObject = {}): Promise<ApiResponse<T>> {
-    const response = await fetch(this._buildUrl(url, params), {
+    const response = await this.adaptativeFetch(this._buildUrl(url, params), {
       method: "GET",
-      headers: this._buildHeaders(),
+      headers: await this._buildHeaders(),
     });
 
     return await this._buildResponse<T>(response);
   }
 
   static async post<T>(url: string, body: JSONObject): Promise<ApiResponse<T>> {
-    const response = await fetch(this._buildUrl(url), {
+    const response = await this.adaptativeFetch(this._buildUrl(url), {
       method: "POST",
-      headers: this._buildHeaders(),
+      headers: await this._buildHeaders(),
       body: JSON.stringify(body),
     });
 
@@ -23,9 +23,9 @@ export class ApiService {
   }
 
   static async patch<T>(url: string, body: JSONObject): Promise<ApiResponse<T>> {
-    const response = await fetch(this._buildUrl(url), {
+    const response = await this.adaptativeFetch(this._buildUrl(url), {
       method: "PATCH",
-      headers: this._buildHeaders(),
+      headers: await this._buildHeaders(),
       body: JSON.stringify(body),
     });
 
@@ -33,7 +33,7 @@ export class ApiService {
   }
 
   static async delete(url: string): Promise<ApiResponse<null>> {
-    const response = await fetch(this._buildUrl(url), {
+    const response = await this.adaptativeFetch(this._buildUrl(url), {
       method: "DELETE",
     });
 
@@ -41,7 +41,7 @@ export class ApiService {
   }
 
   private static _buildUrl(path: string, params: JSONObject = {}): string {
-    const url: URL = new URL(path, this._baseUrl);
+    const url: URL = new URL(path, this._baseUrl());
 
     for (const [key, value] of Object.entries(params)) {
       const snakeKey = key.replace(/([A-Z])/g, "_$1").toLowerCase();
@@ -51,10 +51,12 @@ export class ApiService {
     return url.toString();
   }
 
-  private static _buildHeaders(): { [key: string]: string } {
+  private static async _buildHeaders(): Promise<{ [key: string]: string }> {
+    const accessToken = await Cookies.get("access_token");
+
     return {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${useAuthStore.getState().accessToken}`,
+      Authorization: `Bearer ${accessToken}`,
     };
   }
 
@@ -65,5 +67,24 @@ export class ApiService {
       ok: response.ok,
       data,
     };
+  }
+
+  private static async adaptativeFetch(url: string, params: RequestInit): Promise<Response> {
+    if (typeof window !== "undefined") {
+      return fetch(url, params as RequestInit);
+    } else {
+      if (!this.nodeFetch) {
+        this.nodeFetch = (await import("node-fetch")).default;
+      }
+      return this.nodeFetch(url, params) as Promise<Response>;
+    }
+  }
+
+  private static _baseUrl() {
+    if (typeof window !== "undefined") {
+      return "http://127.0.0.1/api/";
+    } else {
+      return "http://backend:3000/";
+    }
   }
 }

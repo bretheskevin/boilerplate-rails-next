@@ -1,6 +1,6 @@
 import { ApiService } from "@/core/services/api.service";
 import { IUser, User } from "@/core/models/user.model";
-import { clearTokens, setAccessToken, setRefreshToken } from "@/stores/auth.store";
+import { Cookies } from "@/core/utils/client/cookies";
 
 interface DeviseSuccessResponse {
   expires_in: number;
@@ -39,14 +39,18 @@ export class AuthService {
   }
 
   static logout(): void {
-    clearTokens();
+    Cookies.remove(["access_token", "refresh_token"]);
   }
 
   private static _storeTokens(response: ApiResponse<DeviseSuccessResponse>): void {
-    if (!response.ok) return;
+    if (!response.ok) {
+      this.logout();
+      return;
+    }
+    const { token, refresh_token, expires_in } = response.data as DeviseSuccessResponse;
+    const expiration = new Date(Date.now() + expires_in * 1000 * 60 * 30);
 
-    const data = response.data as DeviseSuccessResponse;
-    setAccessToken(data.token);
-    setRefreshToken(data.refresh_token);
+    Cookies.set("access_token", token, { expires: expiration, path: "/" });
+    Cookies.set("refresh_token", refresh_token, { expires: expiration, path: "/" });
   }
 }
