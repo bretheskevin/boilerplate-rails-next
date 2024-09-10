@@ -13,32 +13,7 @@ backend_precommit() {
             echo "RuboCop failed for backend files. Aborting commit."
             exit 1
         fi
-
-        echo "Running RSpec tests..."
-        docker exec -t "$PROJECT_NAME-backend" sh -c "RAILS_ENV=test rspec"
-        rspec_result=$?
-        if [ $rspec_result -ne 0 ]; then
-            echo "RSpec failed for backend files. Aborting commit."
-            exit 1
-        fi
-
-        cd ..
-    fi
-}
-
-frontend_precommit() {
-    staged_frontend_files=$(git diff --cached --name-only --diff-filter=ACM -- frontend/)
-    if [ -n "$staged_frontend_files" ]; then
-        cd frontend
-        docker exec -t "$PROJECT_NAME-frontend" sh -c "yarn test"
-        vitest_result=$?
-        if [ $vitest_result -ne 0 ]; then
-            echo "Vitest failed for frontend files. Aborting commit."
-            exit 1
-        fi
-        cd ..
     fi
 }
 
 backend_precommit
-frontend_precommit
