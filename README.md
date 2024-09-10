@@ -101,6 +101,5 @@ It will change the ports served by the docker container (it's normal that the po
 
 **TODO**
 
-- [ ] Use volumes correctly so node_modules is dockerized
 - [ ] Migrate Rails.application.secrets to Rails.application.credentials
 - [ ] Automatically initialize EntityManager on model instantiation
