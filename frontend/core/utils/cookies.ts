@@ -6,7 +6,7 @@ interface SetCookieOptions {
 }
 
 export class Cookies {
-  static async get(name: string) {
+  static async get(name: string): Promise<string | undefined> {
     if (typeof window === "undefined") {
       const cookies = await import("next/headers").then((mod) => mod.cookies);
 
