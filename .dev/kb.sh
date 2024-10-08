@@ -25,9 +25,16 @@ console() {
 }
 
 rspec() {
-  if [[ $OPTIONS == *"-d"* ]]; then
-    docker exec -t $PROJECT_NAME-backend sh -c "RAILS_ENV=test rails db:drop db:create db:migrate"
-  fi
+  while getopts ":d" opt; do
+    case $opt in
+      d)
+        docker exec -t $PROJECT_NAME-backend sh -c "RAILS_ENV=test rails db:drop db:create db:migrate"
+        ;;
+      \?)
+        echo "Invalid option: -$OPTARG" >&2
+        ;;
+    esac
+  done
 
   if [[ $1 == -* ]]; then
     shift

@@ -105,4 +105,3 @@ It will change the ports served by the docker container (it's normal that the po
 **TODO**
 
 - [ ] Migrate Rails.application.secrets to Rails.application.credentials
-- [ ] Fix `-d` option on `kb test`
