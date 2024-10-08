@@ -11,6 +11,9 @@ Your application will be served to [http://localhost/](http://localhost/)
       use `docker compose`, or add an alias in your `.bash_aliases` file.
 - [Yarn](https://classic.yarnpkg.com/en/docs/install)
 
+If you're on macOS, [Orbstack](https://docs.orbstack.dev/) is a good alternative to Docker Compose, as it offers better performance 
+and lower resource consumption compared to Docker Desktop.
+
 ## Get started
 
 Rename the `.env.example` file to `.env` and fill it with your own values
@@ -102,3 +105,4 @@ It will change the ports served by the docker container (it's normal that the po
 **TODO**
 
 - [ ] Migrate Rails.application.secrets to Rails.application.credentials
+- [ ] Fix `-d` option on `kb test`
