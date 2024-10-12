@@ -1,4 +1,4 @@
-# Template Next.js / Ruby on Rails
+# Boilerplate Next.js / Ruby on Rails
 
 Your application will be served to [http://localhost/](http://localhost/)
 
