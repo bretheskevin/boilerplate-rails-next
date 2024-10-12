@@ -20,8 +20,11 @@ RSpec.describe ApiErrorResponse do
         expect(response.error_description).to eq(error_description)
       end
 
-      it "freezes the error and error_description attributes" do
+      it "freezes the error attribute" do
         expect(response.error).to be_frozen
+      end
+
+      it "freezes the error_description attribute" do
         expect(response.error_description).to be_frozen
       end
     end

@@ -1,21 +1,20 @@
 require "rails_helper"
 
 describe User do
-  describe "has soft delete" do
-    let(:user) { create(:user) }
+  describe "soft delete" do
+    let!(:user) { create(:user) }
 
-    before do
-      user
-    end
+    before { user.destroy }
 
-    it "change deleted_at column" do
-      user.destroy
+    it "sets the deleted_at column" do
       expect(user.deleted_at).not_to be_nil
     end
 
-    it "User.count change" do
-      user.destroy
+    it "reduces the count of active users" do
       expect(described_class.count).to eq(0)
+    end
+
+    it "maintains the count of all users, including deleted" do
       expect(described_class.with_deleted.count).to eq(1)
     end
   end

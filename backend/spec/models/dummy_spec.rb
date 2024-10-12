@@ -1,21 +1,20 @@
 require "rails_helper"
 
 describe Dummy do
-  let(:dummy) { create(:dummy) }
+  let!(:dummy) { create(:dummy) }
 
-  before do
-    dummy
-  end
+  describe "soft delete" do
+    before { dummy.destroy }
 
-  describe "has soft delete" do
-    it "change deleted_at column" do
-      dummy.destroy
+    it "sets the deleted_at column" do
       expect(dummy.deleted_at).not_to be_nil
     end
 
-    it "Dummy.count change" do
-      dummy.destroy
+    it "reduces the count of active dummies" do
       expect(described_class.count).to eq(0)
+    end
+
+    it "maintains the count of all dummies, including deleted" do
       expect(described_class.with_deleted.count).to eq(1)
     end
   end

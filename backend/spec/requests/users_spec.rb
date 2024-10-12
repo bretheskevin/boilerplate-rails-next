@@ -5,25 +5,37 @@ describe "Users" do
 
   describe "GET #index" do
     context "when user is an admin" do
+      before { get "/users", headers: @admin_header }
+
       it "returns a success response" do
-        get "/users", headers: @admin_header
         expect(response).to be_successful
+      end
+
+      it "returns the correct number of models" do
         expect(json["models"].count).to eq(2)
       end
     end
 
-    context "when user is not an admin" do
-      it "returns an error response" do
-        get "/users", headers: @user_header
+    context "when user is a regular user" do
+      before { get "/users", headers: @user_header }
+
+      it "returns an unauthorized response" do
         expect(response).to have_http_status(:unauthorized)
+      end
+
+      it "contains the error key" do
         expect(json).to have_key("error")
       end
     end
 
     context "when user is not authenticated" do
-      it "returns an error response" do
-        get "/users"
+      before { get "/users" }
+
+      it "returns an unauthorized response" do
         expect(response).to have_http_status(:unauthorized)
+      end
+
+      it "contains the error key" do
         expect(json).to have_key("error")
       end
     end
@@ -31,19 +43,33 @@ describe "Users" do
 
   describe "GET #show" do
     context "when user is an admin" do
-      it "returns the account information" do
-        get "/users/#{@user.id}", headers: @admin_header
+      before { get "/users/#{@user.id}", headers: @admin_header }
+
+      it "returns a success response" do
         expect(response).to be_successful
+      end
+
+      it "returns the correct user id" do
         expect(json["id"]).to eq(@user.id)
+      end
+
+      it "returns the correct user email" do
         expect(json["email"]).to eq(@user.email)
       end
     end
 
     context "when user views their own account" do
-      it "returns their own account information" do
-        get "/users/#{@user.id}", headers: @user_header
+      before { get "/users/#{@user.id}", headers: @user_header }
+
+      it "returns a success response" do
         expect(response).to be_successful
+      end
+
+      it "returns the correct user id" do
         expect(json["id"]).to eq(@user.id)
+      end
+
+      it "returns the correct user email" do
         expect(json["email"]).to eq(@user.email)
       end
     end
@@ -51,91 +77,101 @@ describe "Users" do
     context "when user views another user's account" do
       let(:other_user) { create(:user, email: "otheruser@example.com") }
 
-      it "returns an error response" do
-        get "/users/#{other_user.id}", headers: @user_header
-        expect(response).to have_http_status(:unauthorized)
-        expect(json).to have_key("error")
-      end
-    end
+      before { get "/users/#{other_user.id}", headers: @user_header }
 
-    context "when user is not authenticated" do
-      it "returns an error response" do
-        get "/users/#{@user.id}"
+      it "returns an unauthorized response" do
         expect(response).to have_http_status(:unauthorized)
+      end
+
+      it "contains the error key" do
         expect(json).to have_key("error")
       end
     end
 
     context "when user doesn't exist" do
-      it "returns a 404 response" do
-        get "/users/0", headers: @admin_header
+      before { get "/users/0", headers: @admin_header }
+
+      it "returns a not found response" do
         expect(response).to have_http_status(:not_found)
+      end
+
+      it "contains the error key" do
         expect(json).to have_key("error")
       end
     end
   end
 
   describe "POST #create" do
-    it "does not create a user" do
-      post "/users", headers: @admin_header
+    before { post "/users", headers: @admin_header }
+
+    it "returns a not found response" do
       expect(response).to have_http_status(:not_found)
+    end
+
+    it "contains the error key" do
       expect(json).to have_key("error")
     end
   end
 
   describe "PATCH #update" do
     context "when user is an admin" do
-      it "updates the account information" do
-        patch "/users/#{@user.id}", params: params, headers: @admin_header
+      before { patch "/users/#{@user.id}", params: params, headers: @admin_header }
+
+      it "updates the account information successfully" do
         expect(response).to be_successful
+      end
+
+      it "updates the email correctly" do
         expect(json["email"]).to eq(params[:user][:email])
       end
     end
 
-    context "when user is not admin" do
-      it "updates his own account information" do
-        patch "/users/#{@user.id}", params: params, headers: @user_header
+    context "when user is a regular user" do
+      before { patch "/users/#{@user.id}", params: params, headers: @user_header }
+
+      it "updates their own account successfully" do
         expect(response).to be_successful
+      end
+
+      it "updates their email correctly" do
         expect(json["email"]).to eq(params[:user][:email])
       end
 
-      it "updates other account information" do
+      it "cannot update another account" do
         patch "/users/#{@admin.id}", params: params, headers: @user_header
         expect(response).to have_http_status(:unauthorized)
-        expect(json).to have_key("error")
       end
     end
   end
 
   describe "DELETE #destroy" do
     context "when user is an admin" do
-      it "deletes the account" do
+      it "deletes the account successfully" do
         delete "/users/#{@user.id}", headers: @admin_header
         expect(response).to have_http_status(:no_content)
       end
 
-      it "deletes his own account" do
+      it "deletes own account successfully" do
         delete "/users/#{@admin.id}", headers: @admin_header
         expect(response).to have_http_status(:no_content)
       end
 
-      it "can't delete others admin" do
+      it "cannot delete another admin's account" do
         admin = create(:admin, email: "a@a.fr")
-
         delete "/users/#{admin.id}", headers: @admin_header
         expect(response).to have_http_status(:unauthorized)
       end
     end
 
-    context "when user is not an admin" do
-      it "can't delete other account" do
-        user = create(:user, email: "a@a.fr")
+    context "when user is a regular user" do
+      let(:user) { create(:user, email: "a@a.fr") }
 
+      it "cannot delete another account" do
         delete "/users/#{user.id}", headers: @user_header
         expect(response).to have_http_status(:unauthorized)
       end
 
-      it "can delete his own account" do
+      it "can delete their own account" do
         delete "/users/#{@user.id}", headers: @user_header
         expect(response).to have_http_status(:no_content)
       end

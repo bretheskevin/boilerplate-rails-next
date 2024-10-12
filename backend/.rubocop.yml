@@ -68,7 +68,5 @@ Style/TrailingCommaInArguments:
   EnforcedStyleForMultiline: comma
 Layout/ArrayAlignment:
   EnforcedStyle: with_fixed_indentation
-RSpec/MultipleExpectations:
-  Max: 5
 RSpec/InstanceVariable:
   Enabled: false
