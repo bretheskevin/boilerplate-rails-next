@@ -10,7 +10,11 @@ PROJECT_NAME=$(sed -n "s/PROJECT_NAME=\"\(.*\)\"/\1/p" .env)
 OPTIONS=$(echo "$@" | sed -n "s/\(-\w*\)//p")
 
 build() {
-  docker compose build
+  if [ "$1" == "--no-cache" ]; then
+    docker compose build --no-cache
+  else
+    docker compose build
+  fi
 }
 
 start() {
@@ -80,6 +84,8 @@ help() {
     echo -e "${YELLOW}Usage:${RESET} {${GREEN}build${RESET}|${GREEN}start${RESET}|${GREEN}console${RESET}|${GREEN}test${RESET}|${GREEN}rubocop${RESET}|${GREEN}logs${RESET}}"
     echo "|----------------------------------------------------------"
     echo -e "|   ${BLUE}b${RESET}|${BLUE}build:${RESET} Build the project using docker compose"
+    echo "|            Options:"
+    echo -e "|                ${RED}--no-cache${RESET}"
     echo "|----------------------------------------------------------"
     echo -e "|   ${BLUE}s${RESET}|${BLUE}start:${RESET} Start the project by cleaning up and bringing up docker containers"
     echo "|----------------------------------------------------------"
@@ -110,7 +116,7 @@ fi
 
 case "$1" in
   b|build)
-    build
+    build "${@:2}"
     ;;
   s|start)
     start
