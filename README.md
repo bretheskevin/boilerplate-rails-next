@@ -64,6 +64,7 @@ Execute `kb` to see the available commands
 - `kb start` : Start / Restart the project
 - `kb console` : Open a bash console in the backend container
 - `kb test` : Run the tests
+- `kb test_front` : Run Vitest tests
 - `kb rubocop` : Run rubocop
 - `kb logs` : Show the docker containers logs
 
