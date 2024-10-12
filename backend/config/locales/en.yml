@@ -2,3 +2,4 @@ en:
   errors:
     messages:
       missing_params: "Missing required parameters"
+      not_found: "Not found"

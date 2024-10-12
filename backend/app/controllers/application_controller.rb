@@ -6,10 +6,14 @@ class ApplicationController < ActionController::API
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   def user_not_authorized(_exception)
-    render json: { error: "Unauthorized", error_description: [] }, status: :unauthorized
+    render json: ApiErrorResponse.new("Unauthorized"), status: :unauthorized
   end
 
   def pundit_user
     current_devise_api_user
+  end
+
+  def not_found
+    render json: ApiErrorResponse.not_found, status: :not_found
   end
 end

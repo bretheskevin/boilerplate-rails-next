@@ -4,13 +4,8 @@ class DefaultsController < ApplicationController
 end
 
 describe "Dummies" do
-  let(:dummy) { create(:dummy) }
-  let(:dummy_2) { create(:dummy, name: "Dummy 2") }
-
-  before do
-    dummy
-    dummy_2
-  end
+  let!(:dummy) { create(:dummy) }
+  let!(:dummy_2) { create(:dummy, name: "Dummy 2") }
 
   describe "GET #index" do
     it "returns a success response" do
@@ -135,6 +130,15 @@ describe "Dummies" do
         get "/dummies/#{dummy.id}"
         expect(response).to be_successful
       end
+    end
+  end
+
+  describe "not found route" do
+    it "returns a 404 error" do
+      get "/not_found"
+      expect(response).to have_http_status(:not_found)
+      expect(json).to have_key("error")
+      expect(json).to have_key("error_description")
     end
   end
 end
