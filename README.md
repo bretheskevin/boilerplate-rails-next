@@ -106,4 +106,3 @@ It will change the ports served by the docker container (it's normal that the po
 
 - [ ] Migrate Rails.application.secrets to Rails.application.credentials
 - [ ] Swagger
-- [ ] Enable rspec rubocop rules that are disable. And improve the tests
