@@ -106,3 +106,4 @@ It will change the ports served by the docker container (it's normal that the po
 **TODO**
 
 - [ ] Migrate Rails.application.secrets to Rails.application.credentials
+- [ ] Multiple /get depth frontend Model convertor (ex: User have multiple Post, post have to be converted to Post model instead of just having the json)
