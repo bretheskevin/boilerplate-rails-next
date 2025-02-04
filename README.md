@@ -109,3 +109,4 @@ It will change the ports served by the docker container (it's normal that the po
 - [ ] Multiple /get depth frontend Model convertor (ex: User have multiple Post, post have to be converted to Post model instead of just having the json)
 - [ ] Remove every any from frontend
 - [ ] Add adminer
+- [ ] Merge setup.sh script into one file instead of having 2 differents scripts depending of the os
